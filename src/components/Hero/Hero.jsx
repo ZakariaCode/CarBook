@@ -29,7 +29,7 @@ const Hero = ({theme}) => {
             data-aos="fade-up"
             data-aos-delay="1000"
             >Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam similique aspernatur repel
-            lat dolores eveniet atque, corporis vero explicabo animi, pariatur odit. </p>
+            lat dolores eveniet atque, corporis vero explicabo animi, pariatur odit. Zakaria Elhajjam </p>
             <button
              data-aos="fade-up"
             data-aos-duration="1500"
