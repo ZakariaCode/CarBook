@@ -24,7 +24,7 @@ const Hero = ({theme}) => {
             <h1
             data-aos="fade-up"
             data-aos-delay="600"
-             className="text-5xl font-semibold font-serif lg:text-7xl">Car Rental</h1>
+             className="text-5xl font-semibold font-serif lg:text-7xl">Car Rentall</h1>
             <p
             data-aos="fade-up"
             data-aos-delay="1000"
