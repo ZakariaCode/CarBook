@@ -2,26 +2,38 @@ import React, { useState } from "react";
 import { BiSolidSun, BiSolidMoon } from "react-icons/bi";
 import ResponsiveMenu from "./ResponsiveMenu";
 import { HiMenuAlt3, HiMenuAlt1 } from "react-icons/hi";
+import { Link } from "react-scroll";
+import logo from "../../assets/logo.png";
 const NavLinks = [
   {
     id: "1",
     name: "HOME",
-    link: "/#",
+    link: "Hero",
   },
   {
     id: "2",
-    name: "CARS",
-    link: "/#cars",
+    name: "ABOUT",
+    link: "About",
   },
   {
     id: "3",
-    name: "ABOUT",
-    link: "/#about",
+    name: "SERVICES",
+    link: "Services",
   },
   {
     id: "4",
-    name: "BOOKING",
-    link: "/#booking",
+    name: "CARS",
+    link: "Cars",
+  },
+  {
+    id: "5",
+    name: "STORIES",
+    link: "Stories",
+  },
+  {
+    id: "6",
+    name: "CONTACT",
+    link: "Contact",
   },
 ];
 const Navbar = ({ theme, setTheme }) => {
@@ -31,25 +43,30 @@ const Navbar = ({ theme, setTheme }) => {
   };
   return (
     <nav
-      className="shadow-md bg-white dark:bg-dark dark:text-white
-    duration-300 relative z-40"
+      className="shadow-md fixed  bg-white/95 dark:bg-dark/95 dark:text-white
+    duration-300 z-40 w-full"
     >
-      <div className="container py-3 md:py-0">
+      <div className="mx-4 py-3 md:py-0">
+      
         <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold font-serif">Car Rental</h1>
+       
+          <div className=" justify-start">
+            <img src={logo} alt="logo" width={80} height={80} />
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:block justify-center">
             <ul className="flex items-center gap-8">
               {NavLinks.map((data) => (
                 <li key={data.id} className="py-4">
-                  <a
-                    className="py-2 hover:border-b-2 hover:text-primary hover:border-primary transition-colors
-                    duration-500 text-lg font-medium"
-                    href={data.link}
+                  <Link
+                    className=" lg:block cursor-pointer py-2 hover:border-b-[0.9px] hover:text-primary hover:border-primary transition-colors
+                    duration-500 text-base font-normal"
+                    to={data.link}
+                    smooth={true}
+                    duration={800}
+                   offset={-100}
                   >
                     {data.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
               {/* Dark Mode Icons */}
@@ -68,7 +85,7 @@ const Navbar = ({ theme, setTheme }) => {
             </div>
             </ul>
           </div>
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-4 md:hidden justify-end">
           <div>
               {theme === "dark" ? (
                 <BiSolidSun
@@ -96,6 +113,9 @@ const Navbar = ({ theme, setTheme }) => {
                 className="cursor-pointer transition-all"
               />
             )}
+          </div>
+          <div className="hidden md:block"> 
+            <button type="button" className="text-gray-900 my-3 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Login</button>
           </div>
         </div>
       </div>

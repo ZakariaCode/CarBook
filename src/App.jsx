@@ -11,6 +11,8 @@ import Testmonial from "./components/Testmonial/testmonial";
 import AppStore from "./components/AppStore/AppStore";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
+import Background from "./components/Background/Background";
+import { Element } from "react-scroll";
 
 const App = () => {
   // Dark Mode feature
@@ -42,14 +44,16 @@ const App = () => {
   return (
     <div className="bg-white dark:bg-black dark:text-white">
       <Navbar theme={theme} setTheme={setTheme} />
-      <Hero theme={theme} />
-      <About/>
-      <Services/>
-      <CarList/>
-      <Testmonial/>
-      <AppStore/>
-      <Contact/>
+      
+      <Element name="Hero"><Hero theme={theme} /></Element>
+      <Element name="About"><About/></Element>
+      <Element name="Services"><Services/></Element>
+      <Element name="Cars"><CarList/></Element>
+      <Element name="Stories"><Testmonial/></Element>
+      {/* <AppStore/> */}
+      <Element name="Contact"> <Contact/></Element>
       <Footer/>
+
     </div>
   );
 };

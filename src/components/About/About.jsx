@@ -17,7 +17,7 @@ const About = () => {
             <div className="space-y-5 sm:p-16 pb-6">
                 <h1
                 data-aos="fade-up"
-                 className="sm:text-4xl font-bold font-serif">About us</h1>
+                 className="text-3xl font-bold font-serif">About Us</h1>
                 <p data-aos="fade-up">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet fugit nihil officia quos exercitationem.
 

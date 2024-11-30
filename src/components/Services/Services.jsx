@@ -46,8 +46,7 @@ const Services = () => {
                     <div key={skill.name}
                     data-aos="fade-up"
                     data-aos-delay={skill.aosDelay}
-                    className="card text-center group space-y-3 sm:space-y-6 p-4 sm:py-16
-                    bg-dark hover:bg-primary duration-300 text-white hover:text-black
+                    className="card text-center group space-y-3 sm:space-y-6 p-4 sm:py-16 bg-black/40 hover:bg-primary/80 duration-300 text-white hover:text-black
                     rounded-lg"
                     >
                         <div className="grid place-items-center ">
