@@ -32,11 +32,11 @@ const CarList = () => {
         {/* heading */}
         <h1
           data-aos="fade-up"
-          className="text-3xl sm:text-4xl font-semibold font-serif mb-3"
+          className="text-3xl sm:text-4xl text-center font-semibold font-serif mb-3"
         >
-          Lorem, ipsum dolor.
+          Top Cars
         </h1>
-        <p data-aos="fade-up" className="text-sm pb-10 ">
+        <p data-aos="fade-up" className="text-center pb-10 ">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque totam
           o mnis mollitia!
         </p>

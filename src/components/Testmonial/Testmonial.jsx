@@ -5,21 +5,21 @@ const TestimonialData = [
     name: "Dilshad",
     image: "",
     description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem , Ipsum has been the industry's",
     aosDelay: "0",
   },
   {
     name: "Satya",
     image: "",
     description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem , Ipsum has been the industry's",
     aosDelay: "300",
   },
   {
     name: "Sabir",
     image: "",
     description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem , Ipsum has been the industry's",
     aosDelay: "1000",
   },
 ];
@@ -31,8 +31,7 @@ const Testmonial = () => {
         <div className="space-y-4 pb-12">
           <p
             data-aos="fade-up"
-            className="text-3xl font-semibold font-serif text-center sm:text-4xl
-          "
+            className="text-3xl font-semibold font-serif text-center sm:text-4xl"
           >
             What Our Clients Say About Us
           </p>
@@ -42,10 +41,7 @@ const Testmonial = () => {
           </p>
         </div>
         {/* card section */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-black dark:text-white
-        "
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-black dark:text-white">
           {TestimonialData.map((data) => {
             return (
               <div 
