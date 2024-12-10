@@ -1,28 +1,28 @@
-package net.codejava.backcarbook.model;
+package net.codejava.backcarbook.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.codejava.backcarbook.model.Client;
+import net.codejava.backcarbook.model.Contrat;
+import net.codejava.backcarbook.model.Paiement;
+import net.codejava.backcarbook.model.Vehicule;
+
 import java.util.Date;
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ReservationDTO {
     private Long id;
     private Date dateDebut;
     private Date dateFin;
     private float montant;
-    @ManyToOne
     private Vehicule vehicule;
-    @ManyToOne
     private Client client ;
-    @OneToOne
     private Paiement paiement;
-    @OneToOne
     private Contrat contrat;
 
 }

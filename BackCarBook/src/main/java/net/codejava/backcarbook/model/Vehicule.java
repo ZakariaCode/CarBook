@@ -1,24 +1,38 @@
 package net.codejava.backcarbook.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 import java.util.Date;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vehicule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String marque;
     private String modele;
     private String type;
-    private String statut;
+    @Enumerated(EnumType.STRING)
+    private StatutVehicule statut;
     private float tarif;
     private Date annee;
-
+    private String image;
     @OneToMany(mappedBy = "vehicule")
     private Collection<Reservation> reservations;
+    public Vehicule(String marque, String modele, String type, float tarif, Date annee, String image) {
+        this.marque = marque;
+        this.modele = modele;
+        this.type = type;
+        this.tarif = tarif;
+        this.annee = annee;
+        this.image = image;
+    }
 
 }

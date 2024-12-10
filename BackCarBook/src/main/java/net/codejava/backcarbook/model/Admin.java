@@ -10,4 +10,5 @@ import lombok.Data;
 @DiscriminatorValue("admin")
 public class Admin extends Utilisateur {
 
+
 }

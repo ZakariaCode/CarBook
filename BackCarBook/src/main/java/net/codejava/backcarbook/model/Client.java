@@ -15,7 +15,6 @@ import java.util.Collection;
 public class Client extends Utilisateur {
     @OneToMany(mappedBy = "client")
     private Collection<Reservation> reservations;
-
     @OneToOne
     private Avis Avis;
 

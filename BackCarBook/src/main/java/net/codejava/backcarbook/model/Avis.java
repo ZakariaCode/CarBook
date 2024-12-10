@@ -15,7 +15,6 @@ public class Avis {
     private Long id;
     private String Avis ;
     private int nbrEtoile;
-
     @OneToOne(mappedBy = "Avis")
     private Client client;
 }

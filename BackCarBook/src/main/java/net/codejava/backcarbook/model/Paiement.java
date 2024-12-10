@@ -10,7 +10,6 @@ public class Paiement {
     private Long id;
     private Date datePaiement;
     private String methodePaiement;
-
     @OneToOne(mappedBy = "paiement")
     private Reservation reservation;
 

@@ -2,6 +2,7 @@ import React from "react";
 import whiteCar from "../../assets/whitecar.png";
 import car2 from "../../assets/car2.png";
 import car3 from "../../assets/car3.png";
+import { useNavigate } from "react-router-dom";
 const CarListData = [
   {
     name: "RANGE ROVER",
@@ -23,6 +24,7 @@ const CarListData = [
   },
 ];
 const CarList = () => {
+  const Navigate = useNavigate();
   return (
     <div
       className="pb-24 bg-white dark:bg-dark dark:text-white
@@ -77,8 +79,8 @@ const CarList = () => {
         </div>
         {/* end of carListing */}
         <div className="grid place-content-center mt-8">
-            <button data-aos="fade-up" className="button-outline">
-                Get Started
+            <button data-aos="fade-up" className="button-outline" onClick={()=>Navigate('/vehicules')}>
+                Découvrir plus
             </button>
         </div>
       </div>
