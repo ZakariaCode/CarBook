@@ -15,7 +15,7 @@ import java.util.List;
 public class VehiculesController {
     @Autowired
     private VehiculeServiceImpl Vservices;
-    @GetMapping("/getAll")
+    @GetMapping
     public List<VehiculeDTO> getVehicules(){
        return  Vservices.getAllVehicules();
     }

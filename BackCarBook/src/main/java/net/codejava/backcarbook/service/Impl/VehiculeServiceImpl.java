@@ -6,7 +6,7 @@ import net.codejava.backcarbook.exception.ResourceNotFoundException;
 import net.codejava.backcarbook.mapper.VehiculeMapper;
 import net.codejava.backcarbook.model.StatutVehicule;
 import net.codejava.backcarbook.model.Vehicule;
-import net.codejava.backcarbook.repository.VehiculeRepo;
+import net.codejava.backcarbook.repository.VehiculeRepository;
 import net.codejava.backcarbook.service.VehiculeService;
 
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class VehiculeServiceImpl implements VehiculeService {
-    private VehiculeRepo vehiculeRepository;
+    private VehiculeRepository vehiculeRepository;
     @Override
     public VehiculeDTO createVehicule(VehiculeDTO vehiculeDto) {
         Vehicule vehicule= VehiculeMapper.mapToVehicule(vehiculeDto);

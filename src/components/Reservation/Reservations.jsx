@@ -1,9 +1,17 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import { IoLogoModelS } from "react-icons/io";
 import { GiGearStickPattern } from "react-icons/gi";
 import { LuFuel } from "react-icons/lu";
 import { GiCalendarHalfYear } from "react-icons/gi";
+import { getcar } from "../../services/VehiculesService";
+import {
+  createReservation,
+  ValideDate,
+} from "../../services/ReservationService";
+import { format } from "date-fns";
+import { MdOutlinePriceCheck } from "react-icons/md";
 
 const Reservations = () => {
   const [rentalType, setRentalType] = useState("day");
@@ -15,52 +23,78 @@ const Reservations = () => {
   const [pickupTime, setPickupTime] = useState("23:00");
   const [dropoffDate, setDropoffDate] = useState("");
   const [dropoffTime, setDropoffTime] = useState("23:00");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const bookingDetails = {
-      rentalType,
-      pickupLocation,
-      dropoffLocation,
-      pickupDate,
-      pickupTime,
-      dropoffDate,
-      dropoffTime,
-    };
-    console.log("Booking Details: ", bookingDetails);
-  };
   const [vehicule, setVehicule] = useState(null);
   const { id } = useParams();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8080/vehicules/getVehicule/" + id)
-      .then((res) => res.json())
-      .then((result) => {
-        setVehicule(result);
+    getcar(id)
+      .then((response) => {
+        setVehicule(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching vehicule:", error);
+        console.error(error);
       });
-  }, [id]);
-  const [displayedText, setDisplayedText] = useState(""); 
-  const fullText = "Reserve your car easily and quickly "; 
-  const [index, setIndex] = useState(0); 
+  }, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const dateDebut = new Date(pickupDate + "T" + pickupTime);
+    const dateFin = new Date(dropoffDate + "T" + dropoffTime);
+
+    const result = ValideDate(dateDebut, dateFin);
+    if (!result.isValid) {
+      setError(result.message);
+      setSuccess("");
+      setTimeout(() => setError(""), 4000);
+      return;
+    } else {
+      console.log(`La durée est de ${result.days} jours.`);
+    const diffDays = ValideDate(dateDebut, dateFin);
+    console.log("Diff days: ", diffDays);
+    const montant = vehicule.tarif * diffDays;
+    console.log("Montant: ", montant);
+    const reservation = {
+      dateDebut,
+      dateFin,
+      montant: montant,
+      vehiculeId: vehicule.id,
+    };
+
+    try {
+      const response = await createReservation(reservation);
+      setSuccess("Booking successfully!");
+      setError("");
+      setTimeout(() => setSuccess(""), 2000);
+      console.log("Réservation réussie :", response.data);
+    } catch (error) {
+      setError("Le véhicule est déjà réservé pour ces dates !");
+      console.log(error);
+      setTimeout(() => setError(""), 4000);
+      setSuccess("");
+    }
+  }
+  };
+
+  const [displayedText, setDisplayedText] = useState("");
+  const fullText = "Reserve your car easily and quickly ";
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const animateText = setInterval(() => {
       if (index < fullText.length) {
-        setDisplayedText((prev) => prev + fullText[index]); 
-        setIndex((prev) => prev + 1); 
+        setDisplayedText((prev) => prev + fullText[index]);
+        setIndex((prev) => prev + 1);
       } else {
         setTimeout(() => {
-          setDisplayedText(""); 
-          setIndex(0); 
+          setDisplayedText("");
+          setIndex(0);
         }, 1000);
         clearInterval(animateText);
       }
-    }, 150); 
+    }, 150);
 
-    return () => clearInterval(animateText); 
+    return () => clearInterval(animateText);
   }, [index, fullText]);
   return (
     <div className=" bg-gray-100 overflow-y-auto pb-12 dark:bg-dark dark:text-white pt-24">
@@ -85,7 +119,7 @@ const Reservations = () => {
               <h1 className="text-xl font-medium border-b border-1 border-double ">
                 Spécification
               </h1>
-              <div className="grid gap-y-4 md:grid-cols-3 sm:grid-cols-1">
+              <div className="grid gap-y-9 md:grid-cols-3 sm:grid-cols-1">
                 <div className="flex space-x-4 grid-cols-2">
                   <div>
                     <IoLogoModelS className="size-8 h-10 w-10 text-gray-600 border border-1 rounded-md  border-gray-600 " />
@@ -101,7 +135,7 @@ const Reservations = () => {
                   </div>
                   <div className="mt-[-3px]">
                     <span className="text-md font-semibold ">Type </span>
-                    <p className="font-thin">{vehicule.modele}</p>
+                    <p className="font-thin">{vehicule.type}</p>
                   </div>
                 </div>
                 <div className="flex space-x-4 grid-cols-2">
@@ -109,8 +143,17 @@ const Reservations = () => {
                     <LuFuel className="size-8 h-10 w-10 text-gray-600 border border-1 rounded-md  border-gray-600 " />
                   </div>
                   <div className="mt-[-3px]">
-                    <span className="text-md font-semibold ">Module</span>
-                    <p className="font-thin">{vehicule.modele}</p>
+                    <span className="text-md font-semibold ">Carburant</span>
+                    <p className="font-thin">{vehicule.carburant}</p>
+                  </div>
+                </div>
+                <div className="flex space-x-4 grid-cols-2">
+                  <div>
+                    <MdOutlinePriceCheck className="size-8 h-10 w-10 text-gray-600 border border-1 rounded-md  border-gray-600 " />
+                  </div>
+                  <div className="mt-[-3px]">
+                    <span className="text-md font-semibold ">Price</span>
+                    <p className="font-thin">{vehicule.tarif}</p>
                   </div>
                 </div>
                 <div className="flex space-x-4 grid-cols-2">
@@ -131,13 +174,26 @@ const Reservations = () => {
           <div className="text-center text-2xl">Loading...</div>
         )}
         <div className="bg-white mt-6 md:mt-0 shadow-xl dark:bg-transparent dark:text-white rounded-md p-6">
-          <h1 className="h-[5vh] text-xl mb-3 font-medium border-b border-1 border-double">
-            {displayedText}
+          <h1 className="h-[5vh] text-xl mb-3 font-medium border-b border-1 border-double text-center">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-red-500 animate-gradient-text font-extrabold text-2xl tracking-wider">
+              {displayedText}
+            </span>
           </h1>
+
           <form
             onSubmit={handleSubmit}
             className="rounded-lg p-6 max-w-md mx-auto space-y-6"
           >
+            {success && (
+              <div className="bg-green-500 text-white p-2 rounded-md">
+                {success}
+              </div>
+            )}
+            {error && (
+              <div className="bg-red-500 text-white p-2 rounded-md">
+                {error}
+              </div>
+            )}
             <div>
               <label className="block text-gray-700 dark:text-white font-medium mb-2">
                 Rental Type

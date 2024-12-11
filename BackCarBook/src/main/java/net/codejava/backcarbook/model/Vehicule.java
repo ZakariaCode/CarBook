@@ -22,16 +22,19 @@ public class Vehicule {
     @Enumerated(EnumType.STRING)
     private StatutVehicule statut;
     private float tarif;
+    private String carburant;
     private Date annee;
     private String image;
     @OneToMany(mappedBy = "vehicule")
     private Collection<Reservation> reservations;
-    public Vehicule(String marque, String modele, String type, float tarif, Date annee, String image) {
+    public Vehicule(String marque, String modele,String type,StatutVehicule status, float tarif,String carburant, Date annee, String image) {
         this.marque = marque;
         this.modele = modele;
         this.type = type;
+        this.statut = status;
         this.tarif = tarif;
         this.annee = annee;
+        this.carburant = carburant;
         this.image = image;
     }
 

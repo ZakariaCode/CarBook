@@ -20,9 +20,9 @@ public class ReservationDTO {
     private Date dateDebut;
     private Date dateFin;
     private float montant;
-    private Vehicule vehicule;
-    private Client client ;
-    private Paiement paiement;
-    private Contrat contrat;
+    private Long vehiculeId;
+    private Long clientId ;
+    private Long paiementId;
+    private Long contratId;
 
 }

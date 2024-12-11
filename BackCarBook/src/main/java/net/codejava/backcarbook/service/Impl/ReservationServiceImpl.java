@@ -3,12 +3,11 @@ package net.codejava.backcarbook.service.Impl;
 import net.codejava.backcarbook.dto.ReservationDTO;
 import net.codejava.backcarbook.exception.ResourceNotFoundException;
 import net.codejava.backcarbook.mapper.ReservationMapper;
-import net.codejava.backcarbook.mapper.VehiculeMapper;
 import net.codejava.backcarbook.model.Reservation;
-import net.codejava.backcarbook.model.StatutVehicule;
-import net.codejava.backcarbook.model.Vehicule;
-import net.codejava.backcarbook.repository.ReservationRepo;
+import net.codejava.backcarbook.repository.ReservationRepository;
 import net.codejava.backcarbook.service.ReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +15,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl  implements ReservationService {
-    private ReservationRepo reservationRepo;
+    @Autowired
+    private ReservationRepository reservationRepo;
+    @Autowired
+    private ReservationMapper reservationMapper;
+
     @Override
     public ReservationDTO createReservation(ReservationDTO reservationDto) {
-        Reservation reservation= ReservationMapper.mapToReservation(reservationDto);
+        Reservation reservation= reservationMapper.mapToReservation(reservationDto);
+
+        List<Reservation> reservations = reservationRepo.findReservationsChauvaucher(
+                reservationDto.getId(),
+                reservationDto.getDateDebut()
+        );
+        if (!reservations.isEmpty()) {
+            throw new IllegalArgumentException("Le véhicule est déjà réservé pour ces dates.");
+        }
+
         Reservation savedReservation=reservationRepo.save(reservation);
-        return ReservationMapper.mapToReservationDTO(savedReservation);
+        return reservationMapper.mapToReservationDTO(savedReservation);
     }
 
     @Override
@@ -29,31 +41,32 @@ public class ReservationServiceImpl  implements ReservationService {
         Reservation reservation= reservationRepo.findById(reservationId)
                 .orElseThrow(()->
                         new ResourceNotFoundException("reservation is not exist"+reservationId));
-        return ReservationMapper.mapToReservationDTO(reservation);
+        return reservationMapper.mapToReservationDTO(reservation);
     }
 
     @Override
     public List<ReservationDTO> getAllReservations() {
         List<Reservation> reservations=reservationRepo.findAll();
-        return reservations.stream().map(reservation ->ReservationMapper.mapToReservationDTO(reservation))
+        return reservations.stream().map(reservation ->reservationMapper.mapToReservationDTO(reservation))
                 .collect(Collectors.toList());
     }
 
     @Override
     public ReservationDTO updateReservation(Long reservationId, ReservationDTO updatedReservation) {
-        Reservation reservation= reservationRepo.findById(reservationId)
-                .orElseThrow(()->
-                        new ResourceNotFoundException("Reservation is not exist"+reservationId));
-        reservation.setDateDebut(updatedReservation.getDateDebut());
-        reservation.setDateFin(updatedReservation.getDateFin());
-        reservation.setMontant(updatedReservation.getMontant());
-        reservation.setVehicule(updatedReservation.getVehicule());
-        reservation.setClient(updatedReservation.getClient());
-        reservation.setPaiement(updatedReservation.getPaiement());
-        reservation.setContrat(updatedReservation.getContrat());
+//        Reservation reservation= reservationRepo.findById(reservationId)
+//                .orElseThrow(()->
+//                        new ResourceNotFoundException("Reservation is not exist"+reservationId));
+//        reservation.setDateDebut(updatedReservation.getDateDebut());
+//        reservation.setDateFin(updatedReservation.getDateFin());
+//        reservation.setMontant(updatedReservation.getMontant());
+//        reservation.setVehicule(updatedReservation.getVehicule());
+//        reservation.setClient(updatedReservation.getClient());
+//        reservation.setPaiement(updatedReservation.getPaiement());
+//        reservation.setContrat(updatedReservation.getContrat());
 
-        Reservation updateReservationObj=reservationRepo.save(reservation);
-        return ReservationMapper.mapToReservationDTO(updateReservationObj);
+//        Reservation updateReservationObj=reservationRepo.save(reservation);
+//        return ReservationMapper.mapToReservationDTO(updateReservationObj);
+        return null ;
     }
 
     @Override
