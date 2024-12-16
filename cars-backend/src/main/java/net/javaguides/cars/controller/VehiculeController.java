@@ -8,8 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+
+import static net.javaguides.cars.Constant.Constant.IMAGE_DIRECTORY;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+
 @CrossOrigin("*")
 @AllArgsConstructor
 @RestController
@@ -40,6 +49,14 @@ public class VehiculeController {
     public ResponseEntity<String> DeleteVehicule(@PathVariable("id") Long vehiculeId){
          vehiculeService.DeleteVehicule(vehiculeId);
          return ResponseEntity.ok("vehicule supprime avec succes");
+    }
+    @PutMapping("/image")
+    public ResponseEntity<String> uploadImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok().body(vehiculeService.uploadImage(id, file));
+    }
+    @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
+    public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
+        return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
     }
 
 }
