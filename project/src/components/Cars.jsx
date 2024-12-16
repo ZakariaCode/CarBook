@@ -48,15 +48,17 @@ export default function Car() {
     }));
   };
   const saveCar=async (e)=>{
+    e.preventDefault();
     const {data} =await createCar(vehicule);
     const formData =new FormData();
     formData.append('file',file,file.name);
     formData.append('id',data.id);
-    const {data:imageUrl}=await updateImage(formData);
-    console.log(imageUrl);
+    await updateImage(formData);
+    console.log(formData);
     setFile(undefined);
     setVehicule({});
     setShowForm(false);
+    window.location.reload(); 
   };
   const submitEditCar=async (e)=>{
     e.preventDefault();
