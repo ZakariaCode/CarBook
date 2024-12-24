@@ -10,7 +10,7 @@ const skillsData =[
             <FaCameraRetro className="text-5xl text-rimary group-hover:text-balck duration-300"/>
         ),
         link:"#",
-        description:"this is just lorem ipsum non lorem consecteur , adipscing elit",
+        description:"We offer the best rates for car rentals without compromising on quality. Save money while driving the car of your choice.",
         aosDelay:"0",
     },
     {
@@ -19,16 +19,16 @@ const skillsData =[
             <GiNotebook className="text-5xl text-rimary group-hover:text-balck duration-300"/>
         ),
         link:"#",
-        description:"this is just lorem ipsum non lorem consecteur , adipscing elit",
+        description:"Experience fast and reliable service with our safe, well-maintained vehicles. Get on the road quickly with peace of mind.",
         aosDelay:"500",
     },
     {
-        name:"Experience Drivers",
+        name:"Experienced Drivers",
         icon:(
             <SlNote className="text-5xl text-rimary group-hover:text-balck duration-500"/>
         ),
         link:"#",
-        description:"this is just lorem ipsum non lorem consecteur , adipscing elit",
+        description:"Our drivers are experienced professionals who ensure a smooth and safe journey, whether it's a short trip or a long adventure.",
         aosDelay:"1000",
     }
 ]
@@ -54,7 +54,7 @@ const Services = () => {
                         </div>
                         <h1>{skill.name}</h1>
                         <p>{skill.description}</p>
-                        <a href={skill.link}>Learn More</a>
+                        {/* <a href={skill.link}>Learn More</a> */}
                     </div>
                 ))
             }

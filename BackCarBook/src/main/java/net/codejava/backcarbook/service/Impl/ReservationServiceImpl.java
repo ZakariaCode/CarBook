@@ -4,17 +4,17 @@ import net.codejava.backcarbook.dto.ReservationDTO;
 import net.codejava.backcarbook.exception.ResourceNotFoundException;
 import net.codejava.backcarbook.mapper.ReservationMapper;
 import net.codejava.backcarbook.model.Reservation;
+import net.codejava.backcarbook.model.Vehicule;
 import net.codejava.backcarbook.repository.ReservationRepository;
-import net.codejava.backcarbook.service.ReservationService;
+import net.codejava.backcarbook.service.IReservation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReservationServiceImpl  implements ReservationService {
+public class ReservationServiceImpl  implements IReservation {
     @Autowired
     private ReservationRepository reservationRepo;
     @Autowired
@@ -23,9 +23,8 @@ public class ReservationServiceImpl  implements ReservationService {
     @Override
     public ReservationDTO createReservation(ReservationDTO reservationDto) {
         Reservation reservation= reservationMapper.mapToReservation(reservationDto);
-
         List<Reservation> reservations = reservationRepo.findReservationsChauvaucher(
-                reservationDto.getId(),
+                reservationDto.getVehiculeId(),
                 reservationDto.getDateDebut()
         );
         if (!reservations.isEmpty()) {
@@ -52,21 +51,20 @@ public class ReservationServiceImpl  implements ReservationService {
     }
 
     @Override
-    public ReservationDTO updateReservation(Long reservationId, ReservationDTO updatedReservation) {
-//        Reservation reservation= reservationRepo.findById(reservationId)
-//                .orElseThrow(()->
-//                        new ResourceNotFoundException("Reservation is not exist"+reservationId));
-//        reservation.setDateDebut(updatedReservation.getDateDebut());
-//        reservation.setDateFin(updatedReservation.getDateFin());
-//        reservation.setMontant(updatedReservation.getMontant());
-//        reservation.setVehicule(updatedReservation.getVehicule());
-//        reservation.setClient(updatedReservation.getClient());
-//        reservation.setPaiement(updatedReservation.getPaiement());
-//        reservation.setContrat(updatedReservation.getContrat());
+    public ReservationDTO updateReservation(ReservationDTO updatedReservation) {
+        Reservation reservation= reservationRepo.findById(updatedReservation.getId())
+                .orElseThrow(()->
+                        new ResourceNotFoundException("Reservation is not exist"+updatedReservation.getId()));
+        reservation.setDateDebut(updatedReservation.getDateDebut());
+        reservation.setDateFin(updatedReservation.getDateFin());
+        reservation.setMontant(updatedReservation.getMontant());
+        reservation.setVehicule(reservationRepo.findVehiculeById(updatedReservation.getVehiculeId()));
+        reservation.setClient(reservationRepo.findClientById(updatedReservation.getClientId()));
+        reservation.setPaiement(reservationRepo.findPaiementById(updatedReservation.getPaiementId()));
+        reservation.setContrat(reservationRepo.findContratById(updatedReservation.getContratId()) );
 
-//        Reservation updateReservationObj=reservationRepo.save(reservation);
-//        return ReservationMapper.mapToReservationDTO(updateReservationObj);
-        return null ;
+        Reservation updateReservationObj=reservationRepo.save(reservation);
+        return reservationMapper.mapToReservationDTO(updateReservationObj);
     }
 
     @Override

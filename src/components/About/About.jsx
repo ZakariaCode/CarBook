@@ -19,12 +19,12 @@ const About = () => {
                 data-aos="fade-up"
                  className="text-3xl font-bold font-serif">About Us</h1>
                 <p data-aos="fade-up">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet fugit nihil officia quos exercitationem.
+                We are a leading car rental agency, offering a wide range of vehicles for every occasion. Whether you need a car for business, a family vacation, or a weekend getaway, we have you covered.
 
                 </p>
 
                 <p data-aos="fade-up">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, minima.
+                Our fleet includes well-maintained vehicles that are available at competitive prices, with flexible rental terms and excellent customer service to ensure a smooth experience.
                 </p>
                 <button className="button-outline">Get Started</button>
             </div>

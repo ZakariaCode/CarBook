@@ -7,7 +7,7 @@ import net.codejava.backcarbook.mapper.VehiculeMapper;
 import net.codejava.backcarbook.model.StatutVehicule;
 import net.codejava.backcarbook.model.Vehicule;
 import net.codejava.backcarbook.repository.VehiculeRepository;
-import net.codejava.backcarbook.service.VehiculeService;
+import net.codejava.backcarbook.service.IVehicule;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
-public class VehiculeServiceImpl implements VehiculeService {
+public class VehiculeServiceImpl implements IVehicule {
     private VehiculeRepository vehiculeRepository;
     @Override
     public VehiculeDTO createVehicule(VehiculeDTO vehiculeDto) {

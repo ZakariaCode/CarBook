@@ -4,7 +4,7 @@ import net.codejava.backcarbook.dto.VehiculeDTO;
 
 import java.util.List;
 
-public interface VehiculeService {
+public interface IVehicule {
     VehiculeDTO createVehicule(VehiculeDTO vehiculeDto);
     VehiculeDTO getVehiculeById(Long vehiculeId);
     List<VehiculeDTO> getAllVehicules();

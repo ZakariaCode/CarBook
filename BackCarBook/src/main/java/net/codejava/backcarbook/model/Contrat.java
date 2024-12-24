@@ -16,5 +16,5 @@ public class Contrat {
     private String reglement ;
     private Date date;
     @OneToOne(mappedBy = "contrat")
-    Reservation reservation;
+    private Reservation reservation;
 }

@@ -13,11 +13,11 @@ const FooterLinks = [
     link: "/#",
   },
   {
-    title: "About",
+    title: "About Us",
     link: "/#about",
   },
   {
-    title: "Contact",
+    title: "Contact Us",
     link: "/#contact",
   },
   {
@@ -25,6 +25,7 @@ const FooterLinks = [
     link: "/#blog",
   },
 ];
+
 const Footer = () => {
   return (
     <div className="bg-gray-100 dark:bg-dark mt-14 rounded-t-3xl">
@@ -33,96 +34,104 @@ const Footer = () => {
           {/* company details */}
           <div className="py-8 px-4">
             <h1
-              className="text-xl sm:text-3xl sm:text-left text-justify mb-3 
-                "
+              className="text-xl sm:text-3xl sm:text-left text-justify mb-3"
             >
-              Car Rental
+              Car Rental Service
             </h1>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Assumenda beatae com modi autem!
+              Providing reliable and affordable car rental services for your business and leisure trips. 
+              We are here to make your journey smoother!
             </p>
             <br />
             <div className="flex items-center gap-3">
               <FaLocationArrow />
-              <p>Noida , Uttar Pradesh</p>
+              <p>Location: Noida, Uttar Pradesh</p>
             </div>
             <div className="flex items-center gap-3 mt-6 rounded-t-3xl">
               <FaMobileAlt />
-              <p>+91 123456789</p>
+              <p>Phone: +91 123456789</p>
             </div>
-            {/* socila Handles */}
-            <div>
-              <a href="#">
+            {/* Social Media Handles */}
+            <div className="flex gap-3 mt-6">
+              <a href="#" target="_blank" rel="noopener noreferrer">
                 <FaInstagram
-                  className="text-3xl hover:text-primary 
-                        duration-300"
+                  className="text-3xl hover:text-primary duration-300"
                 />
               </a>
-              <a href="#">
+              <a href="#" target="_blank" rel="noopener noreferrer">
                 <FaFacebook
-                  className="text-3xl hover:text-primary 
-                        duration-300"
+                  className="text-3xl hover:text-primary duration-300"
                 />
               </a>
-              <a href="#">
+              <a href="#" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin
-                  className="text-3xl hover:text-primary 
-                        duration-300"
+                  className="text-3xl hover:text-primary duration-300"
                 />
               </a>
             </div>
           </div>
           {/* NavLinks */}
-          <div className="grid grod-col-2 sm:grid-cols-3 col-span-2 md:pl-10">
-          {/* first col */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 col-span-2 md:pl-10">
+            {/* First Column */}
             <div>
               <div className="py-8 px-4">
-                <h1 className="text-xl  font-bold sm:text-left text-justify mb-3 gap-3 flex items-center">Important Links</h1>
-                <ul className="flex flex-col gap-3 ">
+                <h1 className="text-xl font-bold sm:text-left mb-3">
+                  Quick Links
+                </h1>
+                <ul className="flex flex-col gap-3">
                   {FooterLinks.map((data) => {
                     return (
-                    <li key={data.title}
-                    className="cursor-pointer hover:text-primary duration-300"
-                    >
-                    <span className="mr-2">{'>'}</span>
+                      <li
+                        key={data.title}
+                        className="cursor-pointer hover:text-primary duration-300"
+                      >
+                        <span className="mr-2">{'>'}</span>
                         <a href={data.link}>{data.title}</a>
-                    </li>
-                  )})}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
-             {/* second col */}
-             <div>
+            {/* Second Column */}
+            <div>
               <div className="py-8 px-4">
-                <h1 className="text-xl  font-bold sm:text-left text-justify mb-3">Important Links</h1>
-                <ul className="flex flex-col gap-3 ">
+                <h1 className="text-xl font-bold sm:text-left mb-3">
+                  Customer Service
+                </h1>
+                <ul className="flex flex-col gap-3">
                   {FooterLinks.map((data) => {
                     return (
-                    <li key={data.title}
-                    className="cursor-pointer hover:text-primary duration-300"
-                    >
-                    <span className="mr-2">{'>'}</span>
+                      <li
+                        key={data.title}
+                        className="cursor-pointer hover:text-primary duration-300"
+                      >
+                        <span className="mr-2">{'>'}</span>
                         <a href={data.link}>{data.title}</a>
-                    </li>
-                  )})}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
-             {/* third col */}
-             <div>
+            {/* Third Column */}
+            <div>
               <div className="py-8 px-4">
-                <h1 className="text-xl  font-bold sm:text-left text-justify mb-3">Important Links</h1>
-                <ul className="flex flex-col gap-3 ">
+                <h1 className="text-xl font-bold sm:text-left mb-3">
+                  Explore Our Services
+                </h1>
+                <ul className="flex flex-col gap-3">
                   {FooterLinks.map((data) => {
                     return (
-                    <li key={data.title}
-                    className="cursor-pointer hover:text-primary duration-300"
-                    >
-                    <span className="mr-2">{'>'}</span>
+                      <li
+                        key={data.title}
+                        className="cursor-pointer hover:text-primary duration-300"
+                      >
+                        <span className="mr-2">{'>'}</span>
                         <a href={data.link}>{data.title}</a>
-                    </li>
-                  )})}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>

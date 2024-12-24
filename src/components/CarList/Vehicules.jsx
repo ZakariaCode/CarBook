@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { listCars } from "../../services/VehiculesService";
+import Avis from "../Avis/Avis";
+import { useLocation } from "react-router-dom";
+
 
 const Vehicules = () => {
   const Navigate = useNavigate();
@@ -9,6 +12,14 @@ const Vehicules = () => {
   const [searchedValue, setSearchedValue] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
+  const location = useLocation();
+    const [showAvisModal, setShowAvisModal] = useState(false);
+
+    useEffect(() => {
+        if (location.state && location.state.showAvisModal) {
+            setShowAvisModal(true);
+        }
+    }, [location]);
 
   useEffect(() => {
     listCars()
@@ -64,7 +75,7 @@ const Vehicules = () => {
           Our Cars
         </h1>
         <p className="text-center pb-10">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque totam omnis mollitia!
+        Explore our wide range of cars, tailored to suit every journey. Whether you're looking for luxury or economy, we have the perfect vehicle for you.
         </p>
 
         <form className="max-w-lg mx-auto m-12 mb-24">
@@ -156,6 +167,7 @@ const Vehicules = () => {
           ))}
         </div>
       </div>
+      {showAvisModal && <Avis />}
     </div>
   );
 };

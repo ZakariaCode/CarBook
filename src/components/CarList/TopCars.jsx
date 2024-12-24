@@ -36,11 +36,12 @@ const CarList = () => {
           data-aos="fade-up"
           className="text-3xl sm:text-4xl text-center font-semibold font-serif mb-3"
         >
-          Top Cars
+          Our Premium Cars
         </h1>
         <p data-aos="fade-up" className="text-center pb-10 ">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque totam
-          o mnis mollitia!
+        Discover our collection of premium cars available for rent. Choose the
+          perfect vehicle for your journey, whether it’s a business trip, family
+          vacation, or adventure.
         </p>
         {/* Car Listing Cards */}
 
@@ -80,7 +81,7 @@ const CarList = () => {
         {/* end of carListing */}
         <div className="grid place-content-center mt-8">
             <button data-aos="fade-up" className="button-outline" onClick={()=>Navigate('/vehicules')}>
-                Découvrir plus
+            Discover More
             </button>
         </div>
       </div>

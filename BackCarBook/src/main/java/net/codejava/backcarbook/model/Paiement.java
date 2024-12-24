@@ -13,8 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Paiement {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private Date datePaiement;
     private String methodePaiement;
     @OneToOne(mappedBy = "paiement")

@@ -27,6 +27,10 @@ public class ReservationController {
     public ReservationDTO saveReservation(@RequestBody ReservationDTO reservationDTO){
         return Rservices.createReservation(reservationDTO);
     }
+    @PostMapping("/update")
+    public ReservationDTO updateReservation( @RequestBody ReservationDTO reservationDTO){
+       return Rservices.updateReservation(reservationDTO);
+    }
 
 }
 

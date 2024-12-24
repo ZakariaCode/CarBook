@@ -22,7 +22,7 @@ public class ReservationDTO {
     private float montant;
     private Long vehiculeId;
     private Long clientId ;
-    private Long paiementId;
+    private String paiementId;
     private Long contratId;
 
 }

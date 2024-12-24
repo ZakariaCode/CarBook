@@ -8,7 +8,7 @@ import Services from "./components/Services/Services";
 // Import correct pour AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
-import CarList from "./components/CarList/CarList";
+import CarList from "./components/CarList/TopCars";
 import Reservations from "./components/Reservation/Reservations";
 import Testmonial from "./components/Testmonial/testmonial";
 import AppStore from "./components/AppStore/AppStore";
@@ -17,6 +17,8 @@ import Footer from "./components/Footer/Footer";
 import Background from "./components/Background/Background";
 import { Element } from "react-scroll";
 import Vehicules from "./components/CarList/Vehicules";
+import PayPalCheckout from "./components/Paypal/PayPalCheckout";
+import Avis from "./components/Avis/Avis";
 const App = () => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
@@ -76,7 +78,9 @@ const App = () => {
           />
           <Route path="/vehicules" element={<Vehicules />} />
           <Route path="/vehicules/reserver/:id" element={<Reservations/>} />
-        </Routes>
+          <Route path="/vehicules/paiment/:id" element={<PayPalCheckout/>} />        
+          <Route path="/Avis" element={<Avis/>} />
+          </Routes>
       </div>
     </Router>
   );

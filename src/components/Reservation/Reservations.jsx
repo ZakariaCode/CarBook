@@ -10,10 +10,13 @@ import {
   createReservation,
   ValideDate,
 } from "../../services/ReservationService";
+import { useNavigate } from "react-router-dom";
+
 import { format } from "date-fns";
 import { MdOutlinePriceCheck } from "react-icons/md";
 
 const Reservations = () => {
+  const Navigate = useNavigate();
   const [rentalType, setRentalType] = useState("day");
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState(
@@ -51,14 +54,15 @@ const Reservations = () => {
     } else {
       console.log(`La durée est de ${result.days} jours.`);
     const diffDays = ValideDate(dateDebut, dateFin);
-    console.log("Diff days: ", diffDays);
-    const montant = vehicule.tarif * diffDays;
+    console.log("Diff days: ", diffDays.days);
+    const montant = vehicule.tarif * diffDays.days;
     console.log("Montant: ", montant);
     const reservation = {
       dateDebut,
       dateFin,
       montant: montant,
       vehiculeId: vehicule.id,
+      clientId:1
     };
 
     try {
@@ -66,7 +70,8 @@ const Reservations = () => {
       setSuccess("Booking successfully!");
       setError("");
       setTimeout(() => setSuccess(""), 2000);
-      console.log("Réservation réussie :", response.data);
+      Navigate(`/vehicules/paiment/${response.data.id}`);
+      console.log("Réservation réussie :", response.data.id);
     } catch (error) {
       setError("Le véhicule est déjà réservé pour ces dates !");
       console.log(error);
@@ -97,7 +102,7 @@ const Reservations = () => {
     return () => clearInterval(animateText);
   }, [index, fullText]);
   return (
-    <div className=" bg-gray-100 overflow-y-auto pb-12 dark:bg-dark dark:text-white pt-24">
+    <div className=" bg-gray-100 overflow-y-auto h-screen dark:bg-dark dark:text-white items-center pt-24">
       <div className="mt-[5vh] container grid md:grid-cols-2 sm:grid-cols-1 md:space-x-6">
         {vehicule ? (
           <div className="space-y-4">

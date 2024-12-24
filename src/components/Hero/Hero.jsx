@@ -23,7 +23,8 @@ const Hero = ({theme}) => {
         <div className="order-2 sm:order-1 space-y-5 sm:pr-32">
             <p 
             data-aos="fade-up" 
-            className="text-primary text-2xl font-serif">Effortless</p>
+            className="text-primary text-2xl font-serif">Your journey starts here
+            </p>
             <h1
             data-aos="fade-up"
             data-aos-delay="600"
@@ -31,8 +32,7 @@ const Hero = ({theme}) => {
             <p
             data-aos="fade-up"
             data-aos-delay="1000"
-            >Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam similique aspernatur repel
-            lat dolores eveniet atque, corporis vero explicabo animi, pariatur odit. </p>
+            >Explore our fleet of premium cars available at competitive prices. Whether it's a weekend getaway or a business trip, we have the perfect car for you. </p>
             <button
              data-aos="fade-up"
             data-aos-duration="1500"
