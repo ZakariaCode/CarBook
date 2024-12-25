@@ -30,4 +30,13 @@ public class PaiementController {
         PaiementDTO paiementDTO=paiementService.updatePaiement(paiementId,updatePaiement);
         return ResponseEntity.ok(paiementDTO);
     }
+    @GetMapping("/revenu")
+    public ResponseEntity<Double> getRevenu(){
+        double revenu=paiementService.getRevenu();
+        return ResponseEntity.ok(revenu);
+    }
+    @GetMapping("/revenu/{year}")
+    public List<Object[]> getRevenuParMois(@PathVariable("year") int year) {
+        return paiementService.getRevenuParMois(year);
+    }
 }

@@ -51,4 +51,19 @@ public class ReservationController {
         String client=Rservices.getClientByReservationId(reservationId);
         return ResponseEntity.ok(client);
     }
+    @GetMapping("/totalReservation")
+    public ResponseEntity<Long> getTotalReservations(){
+        Long reservations =Rservices.getTotalReservations();
+        return ResponseEntity.ok(reservations);
+    }
+    @GetMapping("/nombre/{year}")
+    public ResponseEntity<List<Object[]>> getNombreReservationsParMois(@PathVariable("year") int year) {
+        List<Object[]> reservations =Rservices.getNombreReservationsParMois(year);
+        return ResponseEntity.ok(reservations);
+    }
+    @GetMapping("/clients-fideles")
+    public ResponseEntity<Long> getClientsFideles() {
+        Long nombreClientsFideles = Rservices.countClientsFideles();
+        return ResponseEntity.ok(nombreClientsFideles);
+    }
 }

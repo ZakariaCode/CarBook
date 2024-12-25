@@ -45,4 +45,10 @@ public class PaiementServiceImpl implements PaiementService {
         Paiement updatePaiementObj=paiementRepository.save(paiement);
         return PaiementMapper.mapToPaiementDTO(updatePaiementObj);
     }
+    public double getRevenu(){
+        return paiementRepository.getRevenu();
+    }
+    public List<Object[]> getRevenuParMois(int year) {
+        return paiementRepository.findRevenuParMois(year);
+    }
 }

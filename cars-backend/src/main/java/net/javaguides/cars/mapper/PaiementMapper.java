@@ -6,12 +6,13 @@ import net.javaguides.cars.model.*;
 
 public class PaiementMapper {
     public static PaiementDTO mapToPaiementDTO(Paiement paiement){
+        Long reservationId = (paiement.getReservation() != null) ? paiement.getReservation().getId() : null;
         return new PaiementDTO(
                 paiement.getId(),
                 paiement.getDatePaiement(),
                 paiement.getMethodePaiement()!= null ? paiement.getMethodePaiement().name() : null,
                 paiement.getMontant(),
-                paiement.getReservation().getId()
+                reservationId
         );
     }
     public static Paiement mapToPaiement(PaiementDTO paiementDTO){

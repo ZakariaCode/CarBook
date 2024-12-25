@@ -102,4 +102,8 @@ public class VehiculeServiceImpl implements VehiculeService {
             throw new RuntimeException("Unable to save image");
         }
     };
+    public Long getTotalVehicles() {
+        return vehiculeRepository.getTotalVehicules();
+    }
+
 }

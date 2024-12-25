@@ -109,4 +109,13 @@ public class ReservationServiceImpl  implements ReservationService {
                         new ResourceNotFoundException("Client non trouvé pour la réservation ID"+reservationId));
         return client.getNom();
     }
+    public Long getTotalReservations(){
+        return reservationRepo.getTotalReservations();
+    }
+    public List<Object[]> getNombreReservationsParMois(int year) {
+        return reservationRepo.findNombreReservationsParMois(year);
+    }
+    public Long countClientsFideles(){
+        return reservationRepo.countClientsFideles();
+    }
 }

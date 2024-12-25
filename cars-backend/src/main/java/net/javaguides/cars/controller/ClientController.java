@@ -1,6 +1,7 @@
 package net.javaguides.cars.controller;
 
 import lombok.AllArgsConstructor;
+import net.javaguides.cars.dto.AvisDTO;
 import net.javaguides.cars.dto.ClientDTO;
 import net.javaguides.cars.service.ClientService;
 import org.springframework.http.ResponseEntity;
@@ -28,5 +29,20 @@ public class ClientController {
     public ResponseEntity<ClientDTO> updateClient(@PathVariable("id") Long clientId, @RequestBody ClientDTO updateClient){
         ClientDTO clientDTO= clientService.updateClient(clientId,updateClient);
         return ResponseEntity.ok(clientDTO);
+    }
+    @GetMapping("/clients_communaute")
+    public ResponseEntity<Long> nombres_communaute(){
+        Long clients = clientService.nombres_communaute();
+        return ResponseEntity.ok(clients);
+    }
+    @GetMapping("/avis/{id}")
+    public ResponseEntity<AvisDTO> getAvisByIdClient(@PathVariable("id") Long clientId){
+        AvisDTO avis = clientService.getAvisByClientId(clientId);
+        return ResponseEntity.ok(avis);
+    }
+    @GetMapping("/avis")
+    public ResponseEntity<List<ClientDTO>> getAllClientAvis(){
+        List<ClientDTO> client = clientService.getAllClientAvis();
+        return  ResponseEntity.ok(client);
     }
 }

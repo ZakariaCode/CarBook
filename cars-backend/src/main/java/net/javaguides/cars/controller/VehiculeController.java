@@ -58,5 +58,10 @@ public class VehiculeController {
     public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
     }
+    @GetMapping("/totalVehicule")
+    public ResponseEntity<Long> getTotalVehicules(){
+        Long vehicules =vehiculeService.getTotalVehicles();
+        return ResponseEntity.ok(vehicules);
+    }
 
 }

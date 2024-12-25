@@ -6,12 +6,14 @@ import net.javaguides.cars.model.*;
 public class ReservationMapper
 {
     public static ReservationDTO mapToReservationDTO(Reservation reservation){
+        Long clientId = (reservation.getClient() != null) ? reservation.getClient().getId() : null;
+
         return new ReservationDTO(
                 reservation.getId(),
                 reservation.getDateDebut(),
                 reservation.getDateFin(),
                 reservation.getVehicule().getId(),
-                reservation.getClient().getId(),
+                clientId,
                 reservation.getPaiement().getId(),
                 reservation.getContrat().getId()
         );

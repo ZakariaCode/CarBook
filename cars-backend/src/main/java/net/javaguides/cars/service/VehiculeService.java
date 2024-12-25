@@ -11,5 +11,6 @@ public interface VehiculeService {
     List<VehiculeDTO> getAllVehicules();
     VehiculeDTO updateVehicule(Long vehiculeId, VehiculeDTO updateVehicule);
     void DeleteVehicule(Long vehiculeId);
-    public String uploadImage(Long vehiculeId, MultipartFile file);
+    String uploadImage(Long vehiculeId, MultipartFile file);
+    Long getTotalVehicles();
 }
