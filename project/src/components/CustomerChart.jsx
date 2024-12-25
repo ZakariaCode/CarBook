@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell, Legend } from 'recharts';
+import {nombres_communaute} from '../services/ClientService'
+import {getClientsFideles} from '../services/ReservationService'
 
-const data = [
-  { name: 'Client fidèle', value: 30 },
-  { name: 'Visiteur', value: 50 },
-  { name: 'Communauté', value: 20 },
-];
 
 const COLORS = ['#4CAF50', '#FF9800', '#2196F3']; 
 
@@ -41,14 +38,41 @@ const renderActiveShape = (props) => {
 
 export default function CustomerChart() {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const onPieEnter = (data, index) => {
-    setActiveIndex(index);
-  };
+  const [data, setData] = useState([]);
+    
+    const fetchData = async () => {
+      try {
+        const [clientsFidelesResponse, communauteResponse] = await Promise.all([
+          getClientsFideles(),
+          nombres_communaute(),
+        ]);
+        const clientsFideles = clientsFidelesResponse.data || 0;
+        const communaute = communauteResponse.data || 0;
+  
+        const visiteurs = 100 - clientsFideles - communaute;
+        const total = clientsFideles + communaute + visiteurs;
+        const updatedData = [
+          { name: 'Client fidèle', value: (clientsFideles / total) * 100 },
+          { name: 'Communauté', value: (communaute / total) * 100 },
+          { name: 'Visiteur', value: (visiteurs / total) * 100 },
+        ];
+  
+        setData(updatedData);
+        
+      } catch (error) {
+        console.error( error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
+    const onPieEnter = (_, index) => {
+      setActiveIndex(index);
+    };
   return (
     <div className="h-[24rem] w-full bg-white dark:bg-[#121212] p-4 rounded-2xl border border-gray-200 flex flex-col">
-      <strong className="text-gray-700 font-medium mb-3">Customer</strong>
-      <div className="w-full flex-1 text-xs">
+      <strong className="mb-3 font-medium text-gray-700">Customer</strong>
+      <div className="flex-1 w-full text-xs">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart width={400} height={400}>
             <Pie

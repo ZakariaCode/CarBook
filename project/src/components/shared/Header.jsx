@@ -9,10 +9,21 @@ import { IoMdMenu } from 'react-icons/io'
 import {FaUserCircle} from 'react-icons/fa'
 import { FaMoon } from "react-icons/fa6";
 import { LuSunMedium } from "react-icons/lu";
+import {getAdmin,updateAdmin,updateImage} from '../../services/AdminService'
 
 //import image from '../../assets/basil.jpg'
 
 export default function Header({issideBarToggle,setIsSideBarToggle,theme, setTheme}) {
+  const [admin, setAdmin]=useState({
+      image:""
+      });
+  useEffect(()=>{
+    getAdmin().then((response)=>{
+      setAdmin(response.data);
+    }).catch(error=>{
+      console.error(error);
+    })
+  },[])
   const navigate=useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState(null);
@@ -21,73 +32,70 @@ export default function Header({issideBarToggle,setIsSideBarToggle,theme, setThe
     setTheme(newTheme);
   };
   return (
-    <div className='bg-transparent h-16 px-4  flex justify-between items-center'>
+    <div className='flex items-center justify-between h-16 px-4 bg-transparent'>
       <div className='flex flex-row items-center'>
-        <button className="lg:hidden p-4" onClick={()=>setIsSideBarToggle(!issideBarToggle)}>
-          <IoMdMenu className="dark:text-white text-black cursor-pointer" fontSize={25} />
+        <button className="p-4 lg:hidden" onClick={()=>setIsSideBarToggle(!issideBarToggle)}>
+          <IoMdMenu className="text-black cursor-pointer dark:text-white" fontSize={25} />
         </button>
-        <div className='relative '>
-          <FaSearch className='text-gray-500 absolute top-1/2 -translate-y-1/2 left-3'></FaSearch>
-          <input type='text' placeholder='Search..' className='text-sm rounded-full focus:outline-none h-10 w-[30vw] lg:w-[20vw] px-3 pl-10  border border-gray-500'></input>
-        </div>
+        
       </div>
       <div className="flex items-center">
-      <label For="theme-switch" className="flex items-center cursor-pointer">
-      <div className="relative -right-4">
-        <input id="theme-switch" type="checkbox" className="sr-only" checked={theme} onChange={toggleTheme}/>
-        <div
-          className={`block w-14 h-8 rounded-full ${
-            theme==='light' ? 'bg-gray-300' : 'bg-gray-500'
-          }`}
-        >
+      <label For="theme-switch" className="flex items-center cursor-pointer m-7">
+        <div className="relative -right-4">
+          <input id="theme-switch" type="checkbox" className="sr-only" checked={theme} onChange={toggleTheme}/>
+          <div
+            className={`block w-14 h-8 rounded-full ${
+              theme==='light' ? 'bg-gray-300' : 'bg-gray-500'
+            }`}
+          >
+          </div>
+          <div
+            className={`dot absolute left-1 top-1 w-6 h-6 rounded-full transition ${
+              theme==='dark' ? 'translate-x-6 bg-black' : 'bg-white'
+            }`}
+          >
+            {theme==='dark' ? (
+            <FaMoon className='mt-1 ml-1 text-sm text-center text-white ' />
+            ):
+            (
+              <LuSunMedium className='mt-1 ml-1 text-sm text-center text-black '  />
+            )}
+          </div>
         </div>
-        <div
-          className={`dot absolute left-1 top-1 w-6 h-6 rounded-full transition ${
-            theme==='dark' ? 'translate-x-6 bg-black' : 'bg-white'
-          }`}
-        >
-          {theme==='dark' ? (
-          <FaMoon className='text-white text-sm text-center ml-1 mt-1 ' />
-          ):
-          (
-            <LuSunMedium className='text-black text-sm text-center ml-1 mt-1 '  />
-          )}
-        </div>
-      </div>
     </label>
       <Menu as="div" className="relative inline-block text-left ">
-          <Menu.Button className="w-full justify-center rounded-md bg-inherit  py-2 text-sm font-medium dark:text-white text-black " onClick={() => setIsOpen(!isOpen)}>
+          <Menu.Button className="justify-center w-full py-2 text-sm font-medium text-black rounded-md bg-inherit dark:text-white " onClick={() => setIsOpen(!isOpen)}>
           <div className='flex items-center gap-2'>
-            <div className="h-10 w-10  rounded-full  bg-cover bg-center transition-transform hover:scale-110 " style={{  backgroundImage: image ? `url(${image})` : "none", 
+            <div className="w-10 h-10 transition-transform bg-center bg-cover rounded-full hover:scale-110 " style={{  backgroundImage: admin.image ? `url(${admin.image})` : "none", 
             color: image ? "transparent" : "white", }}></div>
-            {!image && (
-              <div className="h-10 w-10  rounded-full bg-sky-500 bg-cover bg-center transition-transform hover:scale-110 ">
-                <FaUserCircle size={25} className="text-white dark:text-black font-light mt-2 ml-2" />
+            {!admin.image  && (
+              <div className="w-10 h-10 bg-center bg-cover rounded-full tansition-transform bg-sky-500 hover:scale-110 ">
+                <FaUserCircle size={25} className="mt-2 ml-2 font-light text-white dark:text-black" />
               </div>
             )}
-              <div className='lg:flex items-center gap-2 hidden'>
-                <p className="text-sm dark:text-white text-black">Username</p>
+              <div className='items-center hidden gap-2 lg:flex'>
+                <p className="text-base black dark:text-white">{admin.nom}</p>
                 {isOpen ? (
                 <TiArrowSortedUp fontSize={20} />
               ) : (
                 <TiArrowSortedDown fontSize={20} />
               )}
               </div>
-            </div>
+          </div>
           </Menu.Button>
-          <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-lg p-3  ring-1 bg-white dark:bg-black  focus:outline-none" onBlur={() => setIsOpen(false)}>
-            <div className='divide-y divide-slate-500  '>
+          <Menu.Items className="absolute right-0 w-56 p-3 mt-2 origin-top-right bg-white rounded-lg ring-1 dark:bg-black focus:outline-none" onBlur={() => setIsOpen(false)}>
+            <div className='divide-y divide-slate-500 '>
               <Menu.Item>
                 
                 <div className='relative '>
-                  <CgProfile fontSize={22} className='dark:text-gray-200 text-gray-600 absolute top-1/2 -translate-y-1/2 left-2'></CgProfile>
-                  <button onClick={()=>navigate('/profil')} className='dark:text-gray-200 text-gray-600  text-left mb-4 px-3 pl-10 w-full block'>profile</button>
+                  <CgProfile fontSize={22} className='absolute text-gray-600 -translate-y-1/2 dark:text-gray-200 top-1/2 left-2'></CgProfile>
+                  <button onClick={()=>navigate('/profil')} className='block w-full px-3 pl-10 mb-4 text-left text-gray-600 dark:text-gray-200'>profile</button>
                 </div>
               </Menu.Item>
               <Menu.Item>
               <div className='relative'>
-                  <RiLogoutCircleLine fontSize={22}  className='text-red-500 absolute top-2/3 -translate-y-1/2 left-2 '></RiLogoutCircleLine>
-                  <button onClick={()=>navigate('/login')} className='text-red-500 text-left mt-3 px-3 pl-10 w-full block'>logout</button>
+                  <RiLogoutCircleLine fontSize={22}  className='absolute text-red-500 -translate-y-1/2 top-2/3 left-2 '></RiLogoutCircleLine>
+                  <button onClick={()=>navigate('/login')} className='block w-full px-3 pl-10 mt-3 text-left text-red-500'>logout</button>
               </div>
               </Menu.Item>
               </div>
