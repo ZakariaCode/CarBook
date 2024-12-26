@@ -1,31 +1,56 @@
 import * as React from 'react';
+import Forgotpassword from './Forgotpassword';
+//import jwt_decode from 'jwt-decode';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
 
 function Login({
-    setAuthState,
+    
     setUser
 }) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [rememberMe, setRememberMe] = React.useState(false);
+    const [authState, setAuthState] = React.useState('login');
+    const navigate = useNavigate();
 
-    // Exemple de gestion d'authentification via une API
+    //const navigate = useNavigate();
+    ///const decoded = jwt_decode(credentialResponse.credential);
+       // console.log('User Info:', decoded);
+        // Exemple : { email, name, picture }
+    //};
+
+    const handleError = () => {
+        console.error('Login failed');
+    };
+
+    // gestion d'authentification via une API
     const handleLogin = async () => {
         if (email !== '' && password !== '') {
             try {
-                const response = await fetch('https://your-backend-api.com/login', {
+                const response = await fetch('http://localhost:8080/api/v1/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Accept': 'application/json',
                     },
                     body: JSON.stringify({ email, password }),
                 });
-
+    
+                const data = await response.json();  // Récupérer la réponse JSON du serveur
+    
                 if (response.ok) {
-                    const data = await response.json();
-                    // Exemple : si l'API retourne un utilisateur ou un token
-                    setUser(data.user || email);
-                    setAuthState('home');
+                    const storage = rememberMe ? localStorage : sessionStorage;
+                    storage.setItem('token', data.token);
+                    console.log('Login successful:', data.status);
+                    const userRole = data.role;
+                    localStorage.setItem('userRole', userRole)
+                    //setUser(data.user || email);  // Exemple de gestion de la réponse
+                    setAuthState(userRole === 'Admin' ? 'Admin' : 'Client');
+                
                 } else {
-                    alert('Invalid email or password');
+                    console.error('Error response from API:', data.status);
+                    alert(data.message);  // Affichage du message d'erreur envoyé par le backend
                 }
             } catch (err) {
                 console.error('Login failed:', err);
@@ -34,7 +59,18 @@ function Login({
         } else {
             alert('Please enter both email and password');
         }
+        {/*if (userRole === 'Admin') {
+            setAuthState('Admin');
+            navigate('/admin'); // Rediriger vers la page admin
+        } else {
+            setAuthState('Client');
+            navigate('/client'); // Rediriger vers la page client
+        } */}
     };
+    const handleForgotpassword=async () => {
+        navigate("/forgot-password")
+    }
+    
 
     return (
         <div className="flex w-full h-screen">
@@ -65,15 +101,27 @@ function Login({
                             />
                         </div>
                         <div className="mt-8 flex justify-between items-center">
-                            <div>
-                                <input type="checkbox" id="remember" />
-                                <label className="ml-2 font-medium text-base" htmlFor="remember">
-                                    Remember for 30 days
-                                </label>
-                            </div>
-                            <button className="font-medium text-base text-customYellow">
-                                Forgot password
+                    
+
+                      <div>
+                          <input 
+                            type="checkbox" 
+                            id="remember" 
+                            checked={rememberMe} 
+                            onChange={() => setRememberMe(!rememberMe)} 
+                               />
+                            <label className="ml-2 font-medium text-base" htmlFor="remember">
+                            Remember me for 30 days
+                           </label>
+                     </div>
+
+                     <button 
+                       className="font-medium text-base text-customYellow"
+                           onClick={handleForgotpassword}>
+                                   Forgot password
                             </button>
+                            
+
                         </div>
                         <div className="mt-8 flex flex-col gap-y-4">
                             <button
@@ -82,6 +130,7 @@ function Login({
                             >
                                 Sign in
                             </button>
+                            <GoogleOAuthProvider clientId="1005441791638-g0kr2a9md7jkg91b9de7drl5nss2jp38.apps.googleusercontent.com">
                             <button className="flex items-center justify-center gap-2 active:scale-[.98] active:duration-75 transition-all hover:scale-[1.01] ease-in-out transform py-4 rounded-xl text-gray-700 font-semibold text-lg border-2 border-gray-100">
                                 <svg
                                     width="24"
@@ -109,17 +158,19 @@ function Login({
                                 </svg>
                                 Sign in with Google
                             </button>
+                            </GoogleOAuthProvider>
                         </div>
                         <div className="mt-8 flex justify-center items-center">
                             <p className="font-medium text-base">Don't have an account?</p>
                             <button
-                                onClick={() => setAuthState('register')}
+                                onClick={() => navigate("/register")}
                                 className="ml-2 font-medium text-base text-customYellow"
                             >
                                 Sign up
                             </button>
                         </div>
                     </div>
+                    
                 </div>
             </div>
             <div className="hidden relative w-1/2 h-full lg:flex items-center justify-center bg-gray-200">
@@ -134,8 +185,8 @@ function Login({
         <div className="absolute -bottom-6 right-8 w-12 h-12 bg-black rounded-full"></div>
       </div>
             </div>
+            
         </div>
     );
 }
-
 export default Login;

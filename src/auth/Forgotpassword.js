@@ -1,52 +1,71 @@
 import React, { useState } from 'react';
 
-function ForgotPassword({ onPasswordReset }) {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const handleForgotPassword = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
+const ForgotPassword = () => {
+    const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-      const data = await response.json();
-      if (response.ok) {
-        setMessage('Password reset link has been sent to your email.');
-      } else {
-        setMessage(data.error || 'An error occurred. Please try again.');
-      }
-    } catch (error) {
-      setMessage('An error occurred. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (email !== '') {
+            setLoading(true);
+            setError('');
+            setMessage('');
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/login/forgot-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+                if (response.ok) {
+                    setMessage('A reset link has been sent to your email.');
+                } else {
+                    setError('Failed to send reset link. Try again later.');
+                }
+            } catch (error) {
+                setError('Failed to send reset link. Try again later.');
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            setError('Email field cannot be empty.');
+        }
+    };
 
-  return (
-    <div className="forgot-password">
-      <h2 className="text-2xl font-bold mb-4">Forgot Password</h2>
-      <input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="border rounded px-4 py-2 w-full mb-4"
-      />
-      <button
-        onClick={handleForgotPassword}
-        disabled={loading}
-        className={`bg-blue-500 text-white px-4 py-2 rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-      >
-        {loading ? 'Sending...' : 'Send Reset Link'}
-      </button>
-      {message && <p className="mt-4 text-red-500">{message}</p>}
-    </div>
-  );
-}
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <div className="bg-white shadow-lg rounded p-8 w-full max-w-md">
+                <h1 className="text-2xl font-semibold mb-4">Forgot Password</h1>
+                <p className="text-gray-600 mb-4">Enter your email to receive a password reset link.</p>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        className="w-full px-4 py-2 border border-gray-300 rounded mb-4"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <button
+                        type="submit"
+                        className={`bg-customYellow text-white py-2 px-4 rounded w-full hover:bg-yellow-600 ${
+                            loading ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                        disabled={loading}
+                    >
+                        {loading ? 'Sending...' : 'Send Reset Link'}
+                    </button>
+                </form>
+                {message && <p className="mt-4 text-green-600">{message}</p>}
+                {error && <p className="mt-4 text-red-600">{error}</p>}
+            </div>
+        </div>
+    );
+};
 
 export default ForgotPassword;

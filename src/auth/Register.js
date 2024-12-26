@@ -1,34 +1,45 @@
 import * as React from 'react';
+import { Navigate , useNavigate } from 'react-router-dom';
 
 function Register({ setAuthState }) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [name, setName] = React.useState('');
+    const [firstName, setfirstName] = React.useState('');
+    const [lastName, setlastName] = React.useState('');
     const [cin, setCin] = React.useState('');
+    const navigate = useNavigate();
     
     // Exemple de gestion d'inscription via une API
     const handleRegister = async () => {
-        if (email !== '' && password !== '' && confirmPassword !== '' && name !== '') {
+        if (email && password && confirmPassword && firstName && lastName && cin) {
             if (password !== confirmPassword) {
                 alert('Passwords do not match');
                 return;
             }
-
+    
             try {
-                const response = await fetch('https://your-backend-api.com/register', {
+                const response = await fetch('http://localhost:8080/api/v1/registration'
+, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, password, name }),
+                    body: JSON.stringify({
+                        firstName,
+                        lastName,
+                        email,
+                        password,
+                        
+                    }),
                 });
-
+    
                 if (response.ok) {
                     alert('Registration successful! You can now log in.');
                     setAuthState('login');
                 } else {
-                    alert('Failed to register. Please try again.');
+                    const errorData = await response.json();
+                    alert(`Failed to register: ${errorData.message || 'Please try again.'}`);
                 }
             } catch (err) {
                 console.error('Registration failed:', err);
@@ -38,6 +49,7 @@ function Register({ setAuthState }) {
             alert('Please fill in all fields');
         }
     };
+    
 
     return (
         <div className="flex w-full h-screen mt-20">
@@ -51,10 +63,10 @@ function Register({ setAuthState }) {
                         {/* Name and First Name Side by Side */}
                         <div className="flex gap-4">
                             <div className="flex flex-col w-1/2">
-                                <label className="text-lg font-medium">Name</label>
+                                <label className="text-lg font-medium">lastName</label>
                                 <input
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={lastName}
+                                    onChange={(e) => setlastName(e.target.value)}
                                     className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                     placeholder="Enter your name"
                                 />
@@ -62,8 +74,8 @@ function Register({ setAuthState }) {
                             <div className="flex flex-col w-1/2">
                                 <label className="text-lg font-medium">First Name</label>
                                 <input
-                                    value={cin}
-                                    onChange={(e) => setCin(e.target.value)}
+                                    value={firstName}
+                                    onChange={(e) => setfirstName(e.target.value)}
                                     className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                     placeholder="Enter your first name"
                                 />
@@ -150,7 +162,8 @@ function Register({ setAuthState }) {
                         <div className="mt-8 flex justify-center items-center">
                             <p className="font-medium text-base">Already have an account?</p>
                             <button
-                                onClick={() => setAuthState('login')}
+                             onClick={() => navigate("/")}
+
                                 className="ml-2 font-medium text-base text-customYellow"
                             >
                                 Sign in
