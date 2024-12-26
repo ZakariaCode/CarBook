@@ -14,6 +14,7 @@ public class VehiculeMapper {
                 vehicule.getStatut() != null ? StatutVehicule.valueOf(vehicule.getStatut().name()) : null,
                 vehicule.getTarif(),
                 vehicule.getCarburant(),
+                vehicule.getMatricule(),
                 vehicule.getAnnee(),
                 vehicule.getImage(),
                 null
@@ -30,6 +31,7 @@ public class VehiculeMapper {
                 statut,
                 vehiculeDTO.getTarif(),
                 vehiculeDTO.getCarburant(),
+                vehiculeDTO.getMatricule(),
                 vehiculeDTO.getAnnee(),
                 vehiculeDTO.getImage(),
                 null

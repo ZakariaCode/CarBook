@@ -140,7 +140,7 @@ const Vehicules = () => {
           {filteredVehicules.map((car) => (
             <div
               key={car.id}
-              className="bg-white dark:bg-transparent space-y-3 border-2 border-gray-300 hover:border-primary p-4 rounded-xl relative group"
+              className="bg-white dark:bg-transparent space-y-3 border-2 border-gray-300 hover:border-primary p-4 rounded-xl relative group  hover:shadow-xl"
             >
               <div className="w-full h-[120px] mb-16">
                 <img

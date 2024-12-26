@@ -23,6 +23,7 @@ public class Vehicule {
     private StatutVehicule statut;
     private float tarif;
     private String carburant;
+    private String matricule;
     private Date annee;
     private String image;
     @OneToMany(mappedBy = "vehicule")

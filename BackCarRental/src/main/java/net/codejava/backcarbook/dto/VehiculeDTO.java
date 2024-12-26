@@ -22,6 +22,7 @@ public class VehiculeDTO {
     private StatutVehicule statut;
     private float tarif;
     private String carburant;
+    private String matricule;
     private Date annee;
     private String image;
     private List<Long> reservationIds;
