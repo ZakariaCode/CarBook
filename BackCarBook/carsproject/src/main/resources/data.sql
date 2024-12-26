@@ -1,0 +1,1 @@
+INSERT INTO car (model, brand) VALUES ('Model A', 'ASSIA');
