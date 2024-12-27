@@ -1,6 +1,7 @@
 package net.codejava.BackCarRental.controller;
 
-import net.codejava.BackCarRental.service.EmailSender;
+import net.codejava.BackCarRental.service.IEmailSender;
+import net.codejava.BackCarRental.service.Impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,9 @@ import java.io.IOException;
 @CrossOrigin
 public class EmailController {
 
-    private final EmailSender emailSender;
-
     @Autowired
-    public EmailController(EmailSender emailSender) {
-        this.emailSender = emailSender;
-    }
+    private EmailService emailService;
+
 
     @PostMapping("/send-pdf")
     public ResponseEntity<String> sendEmailWithPdf(
@@ -33,7 +31,7 @@ public class EmailController {
             pdfFile.transferTo(tempFile);
 
             // Envoyer l'email avec le fichier PDF attaché
-            emailSender.send(email,doc, tempFile);
+            emailService.send(email,doc, tempFile);
 
             // Supprimer le fichier temporaire après l'envoi
             tempFile.delete();

@@ -11,8 +11,7 @@ import java.util.Date;
 @Data  @NoArgsConstructor @AllArgsConstructor
 public class Contrat {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private Date date;
     @OneToOne(mappedBy = "contrat")
     private Reservation reservation;

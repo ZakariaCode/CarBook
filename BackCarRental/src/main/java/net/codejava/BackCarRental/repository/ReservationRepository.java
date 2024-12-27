@@ -23,7 +23,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("select p from Paiement p where p.id= :paiementId")
     Paiement findPaiementById(@Param("paiementId") String id);
     @Query("select c from Contrat c where c.id= :contratId")
-    Contrat findContratById(@Param("contratId") Long id);
+    Contrat findContratById(@Param("contratId") String id);
 
 
 }

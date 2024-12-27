@@ -1,5 +1,6 @@
-package net.codejava.BackCarRental.service;
+package net.codejava.BackCarRental.service.Impl;
 
+import net.codejava.BackCarRental.service.IEmailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -15,7 +16,7 @@ import java.io.File;
 import javax.mail.internet.MimeMessage;
 */
 @Service
-public class EmailService implements EmailSender{
+public class EmailService implements IEmailSender {
 
     private final static Logger LOGGER = LoggerFactory
             .getLogger(EmailService.class);

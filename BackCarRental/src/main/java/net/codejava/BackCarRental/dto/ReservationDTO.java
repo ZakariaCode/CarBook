@@ -16,6 +16,6 @@ public class ReservationDTO {
     private Long vehiculeId;
     private Long clientId ;
     private String paiementId;
-    private Long contratId;
+    private String contratId;
 
 }
