@@ -89,32 +89,16 @@ function PayPalCheckout() {
   const onApprove = async (data,actions) => {
     try {
       const orderID = data.orderID;
-      const payerId = String(data.payerID);
       const paymentDetails = await actions.order.capture();
       console.log("Payment actions:", paymentDetails);
       console.log("payment data:", data);
-      let paymentMethod = "Unknown Method";  // Valeur par défaut
+      let paymentMethod = "Unknown Method";  
 
-    // Vérifier si l'ID de l'utilisateur est associé à PayPal
-    if (paymentDetails.payer && paymentDetails.payer.email_address) {
-      if (paymentDetails.payer.email_address.endsWith("@paypal.com")) {
+      if (data.paymentSource === "paypal") {
         paymentMethod = "PayPal";
+      } else if (data.paymentSource === "card") {
+        paymentMethod = "Credit Card";
       }
-    }
-
-    // Vérifier si le paiement provient d'une carte de crédit
-    if (paymentDetails.purchase_units && paymentDetails.purchase_units[0].payments) {
-      const captures = paymentDetails.purchase_units[0].payments.captures;
-      if (captures && captures[0].payment_source) {
-        const paymentSource = captures[0].payment_source;
-        if (paymentSource.card) {
-          paymentMethod = "Credit Card";
-        } else if (paymentSource.paypal) {
-          paymentMethod = "PayPal";
-        }
-      }
-    }
-
       if (!car) {
         console.error("Car data is not loaded yet.");
         alert("Car details are not available. Please try again later.");
