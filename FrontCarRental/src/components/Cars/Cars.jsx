@@ -5,7 +5,7 @@ import {BiSolidShow} from 'react-icons/bi'
 import {MdDelete} from 'react-icons/md'
 import { PiWarningCircle } from "react-icons/pi";
 import {IoAdd} from 'react-icons/io5'
-import {listCars,createCar,updateCar,deleteVehicule,updateImage,getImage} from '../services/VehiculeService'
+import {listCars,createCar,updateCar,deleteVehicule,updateImage,getImage} from '../../services/VehiculeService'
 import { FaFilter } from "react-icons/fa";
 import { IoMdMenu } from 'react-icons/io'
 import { Menu } from '@headlessui/react'

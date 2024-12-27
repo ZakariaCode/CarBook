@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import {FaCamera } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import {FaUserCircle} from 'react-icons/fa'
-import {getAdmin,updateAdmin,updateImage} from '../services/AdminService'
+import {getAdmin,updateAdmin,updateImage} from '../../services/AdminService'
 
 export default function Profil() {
   const [admin, setAdmin]=useState({

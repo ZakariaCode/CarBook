@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react'
 import { FaClipboardList, FaCar, FaDollarSign } from "react-icons/fa";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
-import {getTotalVehicules} from '../services/VehiculeService'
-import {getTotalReservations} from '../services/ReservationService'
-import {getRevenu} from '../services/PaiementService'
+import {getTotalVehicules} from '../../services/VehiculeService'
+import {getTotalReservations} from '../../services/ReservationService'
+import {getRevenu} from '../../services/PaiementService'
 export default function DashboardGrid({theme}) {
   const [totalCars, setTotalCars]=useState([]);
   const [totalReservations, setTotalReservations]=useState([]);

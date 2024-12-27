@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import {getRevenuParMois} from '../services/PaiementService'
-import {getNombreReservationsParMois} from '../services/ReservationService'
+import {getRevenuParMois} from '../../services/PaiementService'
+import {getNombreReservationsParMois} from '../../services/ReservationService'
 export default function Chart(){
   const [data, setData]=useState([]);
   useEffect(() => {

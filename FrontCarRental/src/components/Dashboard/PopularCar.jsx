@@ -1,5 +1,5 @@
 import React from 'react'
-import image from '../assets/basil.jpg'
+import image from '../../assets/basil.jpg'
 const carData = [
   {
     id: 1,
@@ -44,12 +44,12 @@ const carData = [
 export default function PopularCar() {
   return (
     <div className="bg-white dark:bg-[#121212] px-4 py-3 rounded-2xl border border-gray-200 flex flex-col">
-  <strong className="text-black text-xl mb-3">Popular Cars</strong>
+  <strong className="mb-3 text-xl text-black">Popular Cars</strong>
   
   {carData.map((rent) => (
-    <div className="px-4 py-2 flex gap-4 items-center" key={rent.id}>
+    <div className="flex items-center gap-4 px-4 py-2" key={rent.id}>
       <div
-        className="h-11 w-11 rounded-full bg-sky-500 bg-cover bg-center"
+        className="bg-center bg-cover rounded-full h-11 w-11 bg-sky-500"
         style={{ backgroundImage: `url(${image})` }} 
       ></div>
       

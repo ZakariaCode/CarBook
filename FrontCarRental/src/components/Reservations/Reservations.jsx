@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {MdEdit} from 'react-icons/md'
-import {listReservations,updateReservation,getClientByReservationId,getVehiculeByReservationId,getDatePaiementByReservationId} from '../services/ReservationService'
-import {updatePaiement,listPaiement} from '../services/PaiementService'
+import {listReservations,updateReservation,getClientByReservationId,getVehiculeByReservationId,getDatePaiementByReservationId} from '../../services/ReservationService'
+import {updatePaiement,listPaiement} from '../../services/PaiementService'
 import {Link} from 'react-router-dom'
 
 export default function Reservations() {

@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/shared/Layout";
-import Dashboard from './components/Dashboard';
-import Cars from './components/Cars';
-import Customers from './components/Customers';
-import Reservations from './components/Reservations';
-import Profil from './components/Profil';
+import Dashboard from './components/Dashboard/Dashboard';
+import Cars from './components/Cars/Cars';
+import Customers from './components/Customers/Customers';
+import Reservations from './components/Reservations/Reservations';
+import Profil from './components/Profil/Profil';
 
 function App() {
   return (

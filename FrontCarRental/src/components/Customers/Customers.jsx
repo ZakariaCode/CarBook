@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
-import image from '../assets/basil.jpg'
+import image from '../../assets/basil.jpg'
 import {MdEdit} from 'react-icons/md'
-import {listClient,updateClient} from '../services/ClientService'
+import {listClient,updateClient} from '../../services/ClientService'
 
 export default function Customers() {
   const [clients, setClients]=useState([]);
@@ -57,13 +57,13 @@ export default function Customers() {
 
   return (
     <div className="dark:bg-[#121212] bg-white px-4 py-3 rounded-2xl border border-gray-200 flex flex-col mt-10 lg:mx-10 w-screen-short ">
-      <div className='flex flex-col sm:flex-row  items-center justify-between my-4 mx-4'>
-      <strong className="text-gray-700 dark:text-white text-xl my-3 mx-5 ">Customers</strong>
+      <div className='flex flex-col items-center justify-between mx-4 my-4 sm:flex-row'>
+      <strong className="mx-5 my-3 text-xl text-gray-700 dark:text-white ">Customers</strong>
       
       {editCustomer && selectedCustomerId &&(
-                      <div className="fixed inset-0 bg-black/50 z-40 flex justify-center items-center">
+                      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50">
                       {records.filter((cl) => cl.id === selectedCustomerId).map((cl) => (
-                      <div className="bg-white p-6 rounded-md shadow-md w-96 border border-b-gray-200" key={cl.id}>                        <h2 className="text-lg font-bold mb-4 text-gray-700 dark:text-white">Edit Customer</h2>
+                      <div className="p-6 bg-white border rounded-md shadow-md w-96 border-b-gray-200" key={cl.id}>                        <h2 className="mb-4 text-lg font-bold text-gray-700 dark:text-white">Edit Customer</h2>
                         <form onSubmit={submitEditCustomer}>
                           <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-500">
@@ -72,7 +72,7 @@ export default function Customers() {
                             <input
                               type="text"
                               name="nom"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               placeholder="Enter name"
                               value={customer.nom}
                               onChange={handleChange}
@@ -85,7 +85,7 @@ export default function Customers() {
                             <input
                               type="text"
                               name="email"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               placeholder="Enter email"
                               value={customer.email}
                               onChange={handleChange}
@@ -98,7 +98,7 @@ export default function Customers() {
                             <input
                               type="text"
                               name="cin"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               placeholder="Enter Cin"
                               value={customer.cin}
                               onChange={handleChange}
@@ -111,7 +111,7 @@ export default function Customers() {
                             <input
                               type="text"
                               name="adresse"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               placeholder="Enter adresse"
                               value={customer.adresse}
                               onChange={handleChange}
@@ -124,7 +124,7 @@ export default function Customers() {
                             <input
                               type="text"
                               name="ville"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               placeholder="Enter ville"
                               value={customer.ville}
                               onChange={handleChange}
@@ -140,7 +140,7 @@ export default function Customers() {
                             </button>
                             <button
                               type="submit"
-                              className="px-4 py-2 bg-sky-800 text-white rounded-md hover:bg-sky-950"
+                              className="px-4 py-2 text-white rounded-md bg-sky-800 hover:bg-sky-950"
                             >
                               Submit
                             </button>
@@ -153,8 +153,8 @@ export default function Customers() {
 
       </div>
       <div className="mt-3 overflow-x-auto scrollbar-thumb-gray-500 scrollbar-track-gray-300 scrollbar-thin">
-        <table className="min-w-full table-auto text-sm text-left  ">
-          <thead className="border-b truncate mb-7 text-gray-500">
+        <table className="min-w-full text-sm text-left table-auto ">
+          <thead className="text-gray-500 truncate border-b mb-7">
             <tr >
               <th className="px-4 py-3">Nom</th>
               <th className="px-4 py-3 ">Email</th>
@@ -164,11 +164,11 @@ export default function Customers() {
               <th className="px-4 py-3">Action</th>
             </tr>
           </thead>
-          <tbody className="border-b truncate mb-7 text-gray-500 dark:text-gray-100 divide-y divide-slate-100">
+          <tbody className="text-gray-500 truncate border-b divide-y mb-7 dark:text-gray-100 divide-slate-100">
             {records.map((client) => (
               <tr key={client.id} className="hover:bg-[#fff4ea] dark:hover:bg-[#282019]">
-                <td className="px-4 py-3 flex gap-4 items-center font-bold text-gray-500 dark:text-gray-100">
-                  <div className='h-11 w-11 rounded-2xl bg-sky-500 bg-cover bg-center ' style={{ backgroundImage: `url(${image})` }}></div>
+                <td className="flex items-center gap-4 px-4 py-3 font-bold text-gray-500 dark:text-gray-100">
+                  <div className='bg-center bg-cover h-11 w-11 rounded-2xl bg-sky-500 ' style={{ backgroundImage: `url(${image})` }}></div>
                     {client.nom}
                   
                 </td>
@@ -190,8 +190,8 @@ export default function Customers() {
         
 
       </div>
-      <nav className="flex justify-center items-center my-4">
-          <ul className="flex space-x-2 justify-center items-center">
+      <nav className="flex items-center justify-center my-4">
+          <ul className="flex items-center justify-center space-x-2">
             <li className="page-item ">
               <button className={`page-link ${currentPage === 1 ? " text-gray-700" : " text-amber-500"} 
                   px-3 py-2 my-3`} onClick={prePage}

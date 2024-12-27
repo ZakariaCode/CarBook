@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell, Legend } from 'recharts';
-import {nombres_communaute} from '../services/ClientService'
-import {getClientsFideles} from '../services/ReservationService'
+import {nombres_communaute} from '../../services/ClientService'
+import {getClientsFideles} from '../../services/ReservationService'
 
 
 const COLORS = ['#4CAF50', '#FF9800', '#2196F3']; 

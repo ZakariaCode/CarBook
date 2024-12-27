@@ -2,10 +2,9 @@ import React, { useState,useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import {FaSearch} from 'react-icons/fa'
 import StarRating from './StarRating';
-import {getAvisByClientID,getAllClientAvis} from '../services/ClientService'
+import {getAvisByClientID,getAllClientAvis} from '../../../services/ClientService'
   
 export default function RecentRent() {
-  
   const [clients, setClients]=useState([]);
     useEffect(()=>{
       getAllClientAvis().then((response)=>{
@@ -22,7 +21,6 @@ export default function RecentRent() {
   const npage=Math.ceil(clients.length/recordsPerPage);
   const numbers=[...Array(npage+1).keys()].slice(1)
     const [avis,setAvis]=useState({
-     
     });
      useEffect(()=>{
         const fetch=async()=>{
