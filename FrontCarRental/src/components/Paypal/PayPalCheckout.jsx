@@ -5,6 +5,7 @@ import { sendPDFByEmail } from "../../services/Emailing";
 import {
   getReservation,
   updateReservation,
+  ValideDate
 } from "../../services/ReservationService";
 import { getcar } from "../../services/VehiculesService";
 import { addContrat } from "../../services/ContratService";
@@ -14,131 +15,125 @@ function PayPalCheckout() {
   const { id } = useParams();
   const [reservation, setReservation] = useState(null);
   const [car, setCar] = useState(null);
-  const Navigate = useNavigate();
-  
+  const [montant, setMontant] = useState(0);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Get reservation first
         const reservationResponse = await getReservation(id);
         setReservation(reservationResponse.data);
-        
-        // Get car details only if reservation is loaded
-        if (reservationResponse.data && reservationResponse.data.vehiculeId) {
+
+        if (reservationResponse.data?.vehiculeId) {
           const carResponse = await getcar(reservationResponse.data.vehiculeId);
           setCar(carResponse.data);
+
+          const diffDays = ValideDate(
+            reservationResponse.data.dateDebut,
+            reservationResponse.data.dateFin
+          );
+          const calculatedMontant = carResponse.data.tarif * diffDays.days;
+          setMontant(calculatedMontant);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    
+
     fetchData();
   }, [id]);
 
-  const createOrder = (data, actions) => {
-    if (!reservation || !reservation.montant) {
-      console.error("Reservation is not loaded yet.");
-      alert("Reservation details are not available. Please try again later.");
+  const createOrder = async (data, actions) => {
+    if (!reservation || montant <= 0) {
+      console.error("Invalid reservation or montant.", { reservation, montant });
+      alert("Invalid reservation details or amount. Please try again later.");
       return;
     }
 
-    return fetch(`http://localhost:8080/paypal/payment`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ total: reservation.montant }),
-    })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData && responseData.approvalUrl) {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: reservation.montant,
-                },
-              },
-            ],
-            application_context: {
-              brand_name: "My Store",
-              user_action: "PAY_NOW",
-            },
-          });
-        } else {
-          throw new Error("Approval URL not found.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error in createOrder:", error);
-        alert("Failed to create PayPal order.");
+    try {
+      const response = await fetch(`http://localhost:8080/paypal/payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ total: montant }),
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server error: ${errorText}`);
+      }
+
+      const responseData = await response.json();
+      console.log("Payment data:", responseData);
+
+      return actions.order.create({
+        purchase_units: [
+          {
+            amount: {
+              value: montant.toFixed(2),
+            },
+          },
+        ],
+        application_context: {
+          brand_name: "My Store",
+          user_action: "PAY_NOW",
+        },
+      });
+    } catch (error) {
+      console.error("Error in createOrder:", error);
+      alert("Failed to create PayPal order: " + error.message);
+    }
   };
 
-  const onApprove = async (data, actions) => {
+  const onApprove = async (data) => {
     try {
-      const details = await actions.order.capture();
       const orderID = data.orderID;
       const payerId = String(data.payerID);
 
-      // Ensure car data is available before proceeding
       if (!car) {
         console.error("Car data is not loaded yet.");
         alert("Car details are not available. Please try again later.");
         return;
       }
 
-      // Create a contrat
       const contratResponse = await addContrat({ date: new Date() });
       const contrat = contratResponse.data;
-      console.log("paiement id", orderID);
+      console.log("Contract created:", contrat);
 
       const paiementResponse = await addPaiement({
         id: orderID,
         datePaiement: new Date(),
+        montant: montant,
         methodePaiement: "Paypal",
       });
       const paiement = paiementResponse.data;
-
-      console.log("id", reservation.id);
-      console.log("dateDebut", reservation.dateDebut);
-      console.log("dateFin", reservation.dateFin);
-      console.log("montant", reservation.montant);
-      console.log("vehiculeId", reservation.vehiculeId);
-      console.log("clientId", reservation.clientId);
-      console.log("paiementId", paiement.id);
-      console.log("contratId", contrat.id);
+      console.log("Payment created:", paiement);
 
       const updatedReservationResponse = await updateReservation({
         id: reservation.id,
         dateDebut: reservation.dateDebut,
         dateFin: reservation.dateFin,
-        montant: reservation.montant,
         vehiculeId: reservation.vehiculeId,
         clientId: reservation.clientId,
         paiementId: paiement.id,
         contratId: contrat.id,
       });
 
-      const updatedReservation = updatedReservationResponse.data;
+      console.log("Reservation updated:", updatedReservationResponse.data);
 
-      console.log("Contrat", contrat);
-      console.log("Paiement", paiement);
-      console.log("Reservation", updatedReservation);
-      console.log("Order ID", orderID);
-      console.log("Payer ID", payerId);
+      await Promise.all([
+        sendPDFByEmail("elhajjamzakaria1@gmail.com", "contrat", {}),
+        sendPDFByEmail("elhajjamzakaria1@gmail.com", "facture", {
+          montant: montant,
+          nom: "Zakaria",
+          prenom: "Elhajjam",
+          numContrat: contrat.id,
+          marque: `${car.marque} ${car.modele}`,
+        }),
+      ]);
 
-      sendPDFByEmail("elhajjamzakaria1@gmail.com", "contrat", {});
-      sendPDFByEmail("elhajjamzakaria1@gmail.com", "facture", {
-        montant: reservation.montant,
-        nom: "Zakaria",
-        prenom: "Elhajjam",
-        numContrat: contrat.id,
-        marque: car ? `${car.marque} ${car.modele}` : "Car details unavailable",
-      });
-
-      Navigate("/vehicules", { state: { showAvisModal: true } });
+      navigate("/vehicules", { state: { showAvisModal: true } });
     } catch (error) {
       console.error("Error during PayPal checkout:", error);
       alert("An error occurred while processing your payment.");
@@ -156,11 +151,10 @@ function PayPalCheckout() {
           Complete Your Payment
         </h2>
         <p className="text-center text-lg mb-6">
-          You are about to pay <strong>{reservation.montant} USD</strong> for
+          You are about to pay <strong>{montant.toFixed(2)} USD</strong> for
           your reservation.
         </p>
         <PayPalScriptProvider
-          className="my-24"
           options={{
             "client-id":
               "AX4fqp9gpqEsrNj0-pXpBmlrmTfZySnc0rxuUz9VOkpSjnozIHfoRKApP1xPlo54LZ4ImrXC0VPJ5xZy",

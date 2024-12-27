@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>net.codejava</groupId>
-    <artifactId>BackCarBook</artifactId>
+    <artifactId>BackCarRental</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BackCarBook</name>
-    <description>BackCarBook</description>
+    <name>BackCarRental</name>
+    <description>BackCarRental</description>
     <url/>
     <licenses>
         <license/>

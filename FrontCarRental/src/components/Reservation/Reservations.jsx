@@ -52,15 +52,9 @@ const Reservations = () => {
       setTimeout(() => setError(""), 4000);
       return;
     } else {
-      console.log(`La durée est de ${result.days} jours.`);
-    const diffDays = ValideDate(dateDebut, dateFin);
-    console.log("Diff days: ", diffDays.days);
-    const montant = vehicule.tarif * diffDays.days;
-    console.log("Montant: ", montant);
     const reservation = {
       dateDebut,
       dateFin,
-      montant: montant,
       vehiculeId: vehicule.id,
       clientId:1
     };
