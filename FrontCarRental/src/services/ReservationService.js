@@ -45,3 +45,10 @@ export const ValideDate = (datedebut, datefin) => {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return { isValid: true, days: diffDays };
 };
+
+export const getDatePaiementByReservationId=(idReservation) => axios.get(REST_API_BASE_URL+"/paiement/"+idReservation);
+export const getVehiculeByReservationId=(idReservation) => axios.get(REST_API_BASE_URL+"/cars/"+idReservation);
+export const getClientByReservationId=(idReservation) => axios.get(REST_API_BASE_URL+"/client/"+idReservation);
+export const getTotalReservations=() => axios.get(REST_API_BASE_URL+"/totalReservation");
+export const getNombreReservationsParMois=(year) => axios.get(REST_API_BASE_URL+"/nombre/"+year,year);
+export const getClientsFideles=() => axios.get(REST_API_BASE_URL+"/clients-fideles");

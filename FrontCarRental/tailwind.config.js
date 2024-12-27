@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       dropShadow: {
-        'custom': '2px 20px 6px rgba(0, 0, 0, 0.5)',
+        'custom': '2px 20px 6px 2px_10px_6px_rgba(0, 0, 0, 0.5)',
       },
       colors:{
         primary:"#ffc727",

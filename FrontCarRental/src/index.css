@@ -11,3 +11,30 @@
     hover:text-black duration-500 py-2 px-6 text-primary tracking-wider;
   }
 }
+.scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+    border-radius: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background-color: #d1d5db; 
+    border-radius: 4px;
+  }
+  .w-screen-minus {
+    width: calc(100vw - 256px); 
+  }
+  
+  @media (max-width: 1024px) {
+    .w-screen-minus {
+      width: 100vw;
+    }
+  }
+  @media (max-width: 1024px) {
+    .w-screen-short {
+      width: 90vw;
+      margin-left: 15px;
+    }
+  }

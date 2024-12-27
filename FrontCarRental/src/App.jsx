@@ -5,6 +5,13 @@ import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import About from "./components/About/About";
 import Services from "./components/Services/Services";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./components/shared/Layout";
+import Dashboard from './components/Dashboard/Dashboard';
+import Cars from './components/Cars/Cars';
+import Customers from './components/Customers/Customers';
+import Reservations from './components/Reservations/Reservations';
+import Profil from './components/Profil/Profil';
 // Import correct pour AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -80,10 +87,18 @@ const App = () => {
           <Route path="/vehicules/reserver/:id" element={<Reservations/>} />
           <Route path="/vehicules/paiment/:id" element={<PayPalCheckout/>} />        
           <Route path="/Avis" element={<Avis/>} />
+          <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="cars" element={<Cars />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="reservations" element={<Reservations />} />
+          <Route path="profil" element={<Profil />} />
+        </Route>
+        <Route path="/login" element={<div>this is login page</div>}>
+          
+        </Route>
           </Routes>
       </div>
     </Router>
   );
 };
-
-export default App;

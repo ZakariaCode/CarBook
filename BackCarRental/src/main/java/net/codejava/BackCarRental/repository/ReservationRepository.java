@@ -24,6 +24,16 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Paiement findPaiementById(@Param("paiementId") String id);
     @Query("select c from Contrat c where c.id= :contratId")
     Contrat findContratById(@Param("contratId") String id);
+    @Query("SELECT count(r) from Reservation r")
+    Long getTotalReservations();
+    @Query("SELECT MONTH(r.dateDebut) AS mois, COUNT(r) AS nombreReservations " +
+            "FROM Reservation r " +
+            "WHERE YEAR(r.dateDebut) = :year " +
+            "GROUP BY MONTH(r.dateDebut) " +
+            "ORDER BY mois")
+    List<Object[]> findNombreReservationsParMois(@Param("year") int year);
 
+    @Query("SELECT COUNT(DISTINCT r.client.id) FROM Reservation r")
+    Long countClientsFideles();
 
 }

@@ -25,10 +25,51 @@ public class ReservationController {
     public ReservationDTO saveReservation(@RequestBody ReservationDTO reservationDTO){
         return Rservices.createReservation(reservationDTO);
     }
-    @PostMapping("/update")
-    public ReservationDTO updateReservation( @RequestBody ReservationDTO reservationDTO){
-       return Rservices.updateReservation(reservationDTO);
-    }
 
 }
 
+    @GetMapping("/{id}")
+    public ReservationDTO getReservationById(@PathVariable("id") Long id){
+        return Rservices.getReservationById(id);
+    }
+    @PostMapping
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO){
+        ReservationDTO saveReservation=Rservices.createReservation(reservationDTO);
+        return new ResponseEntity<>(saveReservation, HttpStatus.CREATED);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable("id") Long reservationId, @RequestBody ReservationDTO updateReservation){
+        ReservationDTO reservationDTO=Rservices.updateReservation(reservationId,updateReservation);
+        return ResponseEntity.ok(reservationDTO);
+    }
+    @GetMapping("/paiement/{id}")
+    public ResponseEntity<Date> getDatePaiementByReservationId(@PathVariable("id") Long reservationId){
+        Date datePaiement=Rservices.getDatePaiementByReservationId(reservationId);
+        return ResponseEntity.ok(datePaiement);
+    }
+    @GetMapping("/cars/{id}")
+    public ResponseEntity<String> getVehiculeByReservationId(@PathVariable("id") Long reservationId){
+        String Car=Rservices.getVehiculeByReservationId(reservationId);
+        return ResponseEntity.ok(Car);
+    }
+    @GetMapping("/client/{id}")
+    public ResponseEntity<String> getClientByReservationId(@PathVariable("id") Long reservationId){
+        String client=Rservices.getClientByReservationId(reservationId);
+        return ResponseEntity.ok(client);
+    }
+    @GetMapping("/totalReservation")
+    public ResponseEntity<Long> getTotalReservations(){
+        Long reservations =Rservices.getTotalReservations();
+        return ResponseEntity.ok(reservations);
+    }
+    @GetMapping("/nombre/{year}")
+    public ResponseEntity<List<Object[]>> getNombreReservationsParMois(@PathVariable("year") int year) {
+        List<Object[]> reservations =Rservices.getNombreReservationsParMois(year);
+        return ResponseEntity.ok(reservations);
+    }
+    @GetMapping("/clients-fideles")
+    public ResponseEntity<Long> getClientsFideles() {
+        Long nombreClientsFideles = Rservices.countClientsFideles();
+        return ResponseEntity.ok(nombreClientsFideles);
+    }
+}
