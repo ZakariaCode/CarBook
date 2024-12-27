@@ -6,10 +6,11 @@ export const sendPDFByEmail = async (email, pdfType = 'contrat', pdfData = {}) =
   try {
     let pdfBlob;
     if (pdfType === 'facture') {
-      const { montant, nom, prenom, numContrat, marque } = pdfData;
-      pdfBlob = await generateInvoicePDF({ montant, nom, prenom, numContrat, marque });
+      const { montant,tarif, nom,cin,nbrjours, numContrat, marque,model,carburant,dateDebut,dateFin,methodPaiement } = pdfData;
+      pdfBlob = await generateInvoicePDF({ montant,tarif, nom,cin,nbrjours, numContrat, marque,model,carburant,dateDebut,dateFin,methodPaiement });
     } else {
-      pdfBlob = await generatePDFBlob();
+      const { nom, cin, numContrat, marque, matricule } = pdfData;
+      pdfBlob = await generatePDFBlob({nom ,cin,numContrat,marque,matricule});
     }
     const formData = new FormData();
     formData.append('pdf', pdfBlob, `${pdfType}.pdf`);

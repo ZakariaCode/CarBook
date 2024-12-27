@@ -7,6 +7,7 @@ import {
   updateReservation,
   ValideDate
 } from "../../services/ReservationService";
+import {generateIdContrat} from "../../services/ContratService";
 import { getcar } from "../../services/VehiculesService";
 import { addContrat } from "../../services/ContratService";
 import { addPaiement } from "../../services/PaiementService";
@@ -104,8 +105,9 @@ function PayPalCheckout() {
         alert("Car details are not available. Please try again later.");
         return;
       }
+      const idContrat = await generateIdContrat();
 
-      const contratResponse = await addContrat({ date: new Date() });
+      const contratResponse = await addContrat({id:idContrat, date: new Date() });
       const contrat = contratResponse.data;
       console.log("Contract created:", contrat);
 
@@ -131,13 +133,20 @@ function PayPalCheckout() {
       console.log("Reservation updated:", updatedReservationResponse.data);
 
       await Promise.all([
-        sendPDFByEmail("elhajjamzakaria1@gmail.com", "contrat", {}),
+        sendPDFByEmail("elhajjamzakaria1@gmail.com", "contrat", {nom: "Zakaria elhajjam",cin: "EE123456",numContrat: contrat.id,marque: `${car.marque} ${car.modele}`,matricule: car.matricule}),
         sendPDFByEmail("elhajjamzakaria1@gmail.com", "facture", {
           montant: montant,
-          nom: "Zakaria",
-          prenom: "Elhajjam",
+          tarif: car.tarif,
+          nom: "Zakaria elhajjam",
+          cin: "EE123456",
+          nbrjours: ValideDate(reservation.dateDebut, reservation.dateFin).days,
           numContrat: contrat.id,
-          marque: `${car.marque} ${car.modele}`,
+          marque: car.marque,
+          model: car.modele,
+          carburant: car.carburant,
+          dateDebut: reservation.dateDebut,
+          dateFin: reservation.dateFin,
+          methodPaiement: paymentMethod,
         }),
       ]);
 

@@ -1,20 +1,14 @@
 import { Page, Text, View, Image, Document, StyleSheet, pdf } from '@react-pdf/renderer';
 import logo from '../../assets/logo.png';
 import signature from '../../assets/signature.png';
-
-// // Simuler un compteur pour les numéros de contrat
-// let contractCounter = 1000; // Début de la numérotation
-
-// // Fonction pour générer un numéro de contrat séquentiel
-// const generateContractNumber = () => {
-//   contractCounter += 1; // Incrémentation du compteur
-//   return `CONTRAT-${contractCounter}`; // Format : CONTRAT-1001
-// };
+import regulationsData from './Reglement.json';
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    padding: 20,
     backgroundColor: '#fef6e4',
+    fontFamily: 'Helvetica',
+    fontSize: 10,
   },
   logoContainer: {
     position: 'absolute',
@@ -27,71 +21,82 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 30,
+    marginTop: 70,
+    marginBottom: 15,
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#ffc727',
   },
   subTitle: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#555',
-    marginBottom: 30,
+    marginBottom: 18,
   },
   date: {
-    fontSize: 12,
-    marginBottom: 30,
+    fontSize: 11,
+    marginBottom: 15,
     textAlign: 'right',
     color: '#333',
   },
   contractNumber: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 20,
+    marginBottom: 12,
   },
-  regulations: {
-    marginTop: 20,
+  userDetails: {
+    fontSize: 10,
+    color: '#333',
+    marginBottom: 12,
+    lineHeight: 1.6,
+  },
+  userDetailText: {
+    marginBottom: 12,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#ffc727',
-    marginBottom: 10,
+    marginBottom: 12,
     textDecoration: 'underline',
   },
   text: {
-    fontSize: 12,
+    fontSize: 10,
     lineHeight: 1.6,
     color: '#333',
-    marginBottom: 10,
+    marginBottom: 8,
   },
   signatureBlock: {
-    marginTop: 50,
+    marginTop: 25,
     textAlign: 'center',
     alignItems: 'center',
   },
   signatureTitle: {
     marginBottom: 10,
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   signatureImage: {
-    width: 150,
-    height: 60,
+    width: 160,
+    height: 70,
   },
   footer: {
     position: 'absolute',
     bottom: 20,
-    right: 40,
-    fontSize: 10,
+    right: 30,
+    fontSize: 9,
     color: '#333',
+    width: '100%',
+    textAlign: 'center',
+  },
+  regulations: {
+    marginTop: 12,
   },
 });
 
-const generatePDFBlob = async () => {
-  // const contractNumber = generateContractNumber(); 
-
+const generatePDFBlob = async ({ nom, cin, numContrat, marque, matricule }) => {
   const blob = await pdf(
     <Document>
       <Page size="A4" style={styles.page}>
@@ -100,49 +105,36 @@ const generatePDFBlob = async () => {
         </View>
 
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Car Rental</Text>
-          <Text style={styles.subTitle}>Contrat de service de location de voitures</Text>
+          <Text style={styles.title}>Contrat de Location de Véhicule</Text>
+          <Text style={styles.subTitle}>Conditions et Engagements</Text>
         </View>
 
-        <Text style={styles.date}>{`Date : ${new Date().toLocaleDateString()}`}</Text>
-        
-        {/* <Text style={styles.contractNumber}>Numéro du contrat : {contractNumber}</Text> Affichage du numéro de contrat */}
+        <Text style={styles.date}>{`Date: ${new Date().toLocaleDateString()}`}</Text>
+        <Text style={styles.contractNumber}>{`Numéro de Contrat: ${numContrat}`}</Text>
+
+        <View style={styles.userDetails}>
+          <Text style={styles.sectionTitle}>Informations du Client</Text>
+          <Text style={styles.userDetailText}>{`Nom: ${nom}`}</Text>
+          <Text style={styles.userDetailText}>{`CIN: ${cin}`}</Text>
+        </View>
+
+        <View style={styles.userDetails}>
+          <Text style={styles.sectionTitle}>Informations du Véhicule</Text>
+          <Text style={styles.userDetailText}>{`Marque: ${marque}`}</Text>
+          <Text style={styles.userDetailText}>{`Matricule: ${matricule}`}</Text>
+        </View>
 
         <View style={styles.regulations}>
           <Text style={styles.sectionTitle}>Conditions Générales</Text>
-          <Text style={styles.text}>
-            1. Le locataire est tenu de restituer le véhicule à la date et à l`heure convenues. Tout retard entraînera des frais supplémentaires.
-          </Text>
-          <Text style={styles.text}>
-            2. Le locataire est responsable de tout dommage causé au véhicule pendant la durée de la location.
-          </Text>
-          <Text style={styles.text}>
-            3. Le carburant utilisé pendant la location est à la charge du locataire.
-          </Text>
-          <Text style={styles.text}>
-            4. Le véhicule doit être restitué propre, et tous les effets personnels doivent être retirés avant la restitution.
-          </Text>
-          <Text style={styles.text}>
-            5. L`assurance ne couvre pas les actes de négligence ou les infractions au code de la route.
-          </Text>
-          <Text style={styles.text}>
-            6. En cas de panne, le locataire doit contacter immédiatement l`agence pour obtenir de l`assistance.
-          </Text>
-          <Text style={styles.text}>
-            7. Toute modification du contrat doit être communiquée à l`agence et approuvée par écrit.
-          </Text>
-          <Text style={styles.text}>
-            8. Le locataire doit vérifier le véhicule pour s`assurer qu`il est en bon état au moment de la réception.
-          </Text>
-          <Text style={styles.text}>
-            9. L`utilisation du véhicule en dehors des frontières autorisées est strictement interdite.
-          </Text>
+          {regulationsData.conditions.map((condition, index) => (
+            <Text key={index} style={styles.text}>
+              {index + 1}. {condition}
+            </Text>
+          ))}
         </View>
 
         <View style={styles.signatureBlock}>
-          <Text style={[styles.sectionTitle, styles.signatureTitle]}>
-            Signature de l`Agence
-          </Text>
+          <Text style={styles.signatureTitle}>Signature de l'Agence</Text>
           <Image style={styles.signatureImage} src={signature} />
         </View>
 
