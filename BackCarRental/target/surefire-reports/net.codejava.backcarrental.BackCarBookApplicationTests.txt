@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: net.codejava.backcarrental.BackCarBookApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.854 s -- in net.codejava.backcarrental.BackCarBookApplicationTests
