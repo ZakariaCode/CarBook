@@ -121,22 +121,22 @@ export default function Reservations() {
   };
   return (
     <div className="dark:bg-[#121212] bg-white  px-4 py-3 rounded-2xl border border-gray-200 flex flex-col mt-10 lg:mx-10 w-screen-short ">
-      <div className='flex flex-col sm:flex-row  items-center justify-between my-4 mx-4'>
-      <strong className="text-gray-700 dark:text-white text-xl my-3 mx-5 ">Reservation</strong>
+      <div className='flex flex-col items-center justify-between mx-4 my-4 sm:flex-row'>
+      <strong className="mx-5 my-3 text-xl text-gray-700 dark:text-white ">Reservation</strong>
       
       {editRservation && selectedReservationId && (
-                      <div className="fixed inset-0 bg-black/50 z-40 flex justify-center items-center">
+                      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50">
                       {records.filter((res) => res.id === selectedReservationId).map((res) => (
-                      <div className="bg-white dark:bg-black p-6 rounded-md shadow-md w-96 border border-b-gray-200">
-                        <h2 className="text-lg font-bold mb-4 text-black dark:text-white">Edit Reservation</h2>
+                      <div className="p-6 bg-white border rounded-md shadow-md dark:bg-black w-96 border-b-gray-200">
+                        <h2 className="mb-4 text-lg font-bold text-black dark:text-white">Edit Reservation</h2>
                         <form onSubmit={submitEditReservation}>
                           <div className="mb-4">
-                            <label className="block text-sm font-medium dark:text-gray-400 text-black ">
+                            <label className="block text-sm font-medium text-black dark:text-gray-400 ">
                               Date de debut
                             </label>
                             <input
                               type="text"
-                              className="dark:bg-neutral-800 bg-neutral-100bg-neutral-800 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100bg-neutral-800 focus:ring-sky-500 focus:border-sky-500"
                               name="dateDebut"
                               placeholder="Enter date de debut"
                               value={reservation.dateDebut}
@@ -144,12 +144,12 @@ export default function Reservations() {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-sm font-medium dark:text-gray-400 text-black">
+                            <label className="block text-sm font-medium text-black dark:text-gray-400">
                               Date de fin
                             </label>
                             <input
                               type="text"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               name="dateFin"
                               placeholder="Enter date de fin"
                               value={reservation.dateFin}
@@ -159,12 +159,12 @@ export default function Reservations() {
                           {recordsPaiement.filter((paiem) => res.paiementId ===paiem.id).map((paiem) => (
                           <>
                           <div className="mb-4">
-                            <label className="block text-sm font-medium dark:text-gray-400 text-black">
+                            <label className="block text-sm font-medium text-black dark:text-gray-400">
                               Montant
                             </label>
                             <input
                               type="text"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               name="montant"
                               placeholder="Enter montant"
                               value={paiement.montant}
@@ -172,12 +172,12 @@ export default function Reservations() {
                             />
                           </div>
                           <div className="mb-4">
-                            <label className="block text-sm font-medium dark:text-gray-400 text-black">
+                            <label className="block text-sm font-medium text-black dark:text-gray-400">
                               Date de paiement
                             </label>
                             <input
                               type="text"
-                              className="dark:bg-neutral-800 bg-neutral-100 w-full mt-1 p-2 border rounded-md focus:ring-sky-500 focus:border-sky-500"
+                              className="w-full p-2 mt-1 border rounded-md dark:bg-neutral-800 bg-neutral-100 focus:ring-sky-500 focus:border-sky-500"
                               name="datePaiement"
                               placeholder="Enter date de paiement"
                               value={paiement.datePaiement}
@@ -196,7 +196,7 @@ export default function Reservations() {
                             </button>
                             <button
                               type="submit"
-                              className="px-4 py-2 bg-sky-800 text-white rounded-md hover:bg-sky-950"
+                              className="px-4 py-2 text-white rounded-md bg-sky-800 hover:bg-sky-950"
                             >
                               Submit
                             </button>
@@ -209,8 +209,8 @@ export default function Reservations() {
 
       </div>
       <div className="mt-3 overflow-x-auto scrollbar-thumb-gray-500 scrollbar-track-gray-300 scrollbar-thin">
-        <table className="min-w-full table-auto text-sm text-left  ">
-          <thead className="border-b truncate mb-7 text-gray-500 dark:text-gray-500">
+        <table className="min-w-full text-sm text-left table-auto ">
+          <thead className="text-gray-500 truncate border-b mb-7 dark:text-gray-500">
             <tr >
               <th className="px-4 py-3">Client</th>
               <th className="px-4 py-3">Car</th>
@@ -221,13 +221,13 @@ export default function Reservations() {
               <th className="px-4 py-3">Action</th>
             </tr>
           </thead>
-          <tbody className="border-b truncate mb-7 text-gray-600 dark:text-gray-100 divide-y divide-slate-100">
+          <tbody className="text-gray-600 truncate border-b divide-y mb-7 dark:text-gray-100 divide-slate-100">
             {records.map((reservation) => (
               <tr key={reservation.id} className="hover:bg-[#fff4ea] dark:hover:bg-[#282019]">
                 <td className="px-4 py-3 "><Link to={`/client/${reservation.clientId}`}>{client[reservation.id]}</Link></td>
                 <td className="px-4 py-3 "><Link to={`/api/cars/${reservation.vehiculeId}`}>{cars[reservation.id]}</Link></td>
-                <td className="px-4 py-3 font-bold">{reservation.dateDebut}</td>
-                <td className="px-4 py-3">{reservation.dateFin}</td>
+                <td className="px-4 py-3 font-bold">{new Date(reservation.dateDebut).toLocaleDateString('fr-CA')}</td>
+                <td className="px-4 py-3">{new Date(reservation.dateFin).toLocaleDateString('fr-CA')}</td>
                 <td className="px-4 py-3">{datesPaiements[reservation.id]}</td>
                 <td className="px-4 py-3">{reservation.contratId}</td>
                 <td className="px-4 py-3">
@@ -242,8 +242,8 @@ export default function Reservations() {
           </tbody>
         </table>
       </div>
-      <nav className="flex justify-center items-center my-4">
-          <ul className="flex space-x-2 justify-center items-center">
+      <nav className="flex items-center justify-center my-4">
+          <ul className="flex items-center justify-center space-x-2">
             <li className="page-item ">
               <button className={`page-link ${currentPage === 1 ? " text-gray-700" : " text-amber-500"} 
                   px-3 py-2 my-3`} onClick={prePage}
