@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import net.codejava.BackCarRental.dto.VehiculeDTO;
 import net.codejava.BackCarRental.exception.ResourceNotFoundException;
 import net.codejava.BackCarRental.mapper.VehiculeMapper;
+import net.codejava.BackCarRental.model.Reservation;
 import net.codejava.BackCarRental.model.StatutVehicule;
 import net.codejava.BackCarRental.model.Vehicule;
+import net.codejava.BackCarRental.repository.ReservationRepository;
 import net.codejava.BackCarRental.repository.VehiculeRepository;
 import net.codejava.BackCarRental.service.VehiculeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -30,6 +34,8 @@ import static net.codejava.BackCarRental.Constant.Constant.IMAGE_DIRECTORY;
 @AllArgsConstructor
 public class VehiculeServiceImpl implements VehiculeService {
     private VehiculeRepository vehiculeRepository;
+    @Autowired
+    private ReservationRepository reservationRepo;
     @Override
     public VehiculeDTO createVehicule(VehiculeDTO vehiculeDto) {
         Vehicule vehicule= VehiculeMapper.mapToVehicule(vehiculeDto);
@@ -57,12 +63,17 @@ public class VehiculeServiceImpl implements VehiculeService {
         Vehicule vehicule= vehiculeRepository.findById(vehiculeId)
                 .orElseThrow(()->
                         new ResourceNotFoundException("Employee is not exist"+vehiculeId));
+        List<Reservation> reservations = reservationRepo.findAllById(updateVehicule.getReservationIds());
+        if (reservations.size() != updateVehicule.getReservationIds().size()) {
+            throw new ResourceNotFoundException("Some reservations do not exist.");
+        }
         vehicule.setMarque(updateVehicule.getMarque());
         vehicule.setModele(updateVehicule.getModele());
         vehicule.setType(updateVehicule.getType());
         vehicule.setStatut(StatutVehicule.valueOf(updateVehicule.getStatut()));
         vehicule.setTarif(updateVehicule.getTarif());
         vehicule.setAnnee(updateVehicule.getAnnee());
+        vehicule.setReservations(reservations);
         Vehicule updateVehiculeObj=vehiculeRepository.save(vehicule);
         return VehiculeMapper.mapToVehiculeDTO(updateVehiculeObj);
     }
@@ -104,6 +115,13 @@ public class VehiculeServiceImpl implements VehiculeService {
     };
     public Long getTotalVehicles() {
         return vehiculeRepository.getTotalVehicules();
+    }
+
+    @Override
+    public List<VehiculeDTO> popularCars(){
+        List<Vehicule> vehicules=vehiculeRepository.popularCars();
+        return vehicules.stream().map(vehicule ->VehiculeMapper.mapToVehiculeDTO(vehicule))
+                .collect(Collectors.toList());
     }
 
 }
