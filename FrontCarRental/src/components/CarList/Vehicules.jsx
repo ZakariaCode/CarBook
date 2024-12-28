@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { listCars } from "../../services/VehiculesService";
+import { listCars } from "../../services/VehiculeService";
 import Avis from "../Avis/Avis";
 import { useLocation } from "react-router-dom";
 
@@ -71,14 +71,14 @@ const Vehicules = () => {
   return (
     <div className="pb-[53.5vh] bg-gray-100 dark:bg-dark dark:text-white pt-24">
       <div className="container">
-        <h1 className="text-3xl sm:text-4xl text-center font-semibold font-serif mb-3">
+        <h1 className="mb-3 font-serif text-3xl font-semibold text-center sm:text-4xl">
           Our Cars
         </h1>
-        <p className="text-center pb-10">
+        <p className="pb-10 text-center">
         Explore our wide range of cars, tailored to suit every journey. Whether you're looking for luxury or economy, we have the perfect vehicle for you.
         </p>
 
-        <form className="max-w-lg mx-auto m-12 mb-24">
+        <form className="max-w-lg m-12 mx-auto mb-24">
           <div className="flex">
             <button
               type="button"
@@ -103,7 +103,7 @@ const Vehicules = () => {
             </button>
 
             {dropdownOpen && (
-              <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute">
+              <div className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   <li
                     onClick={() => handleCategorySelect("All categories")}
@@ -136,11 +136,11 @@ const Vehicules = () => {
           </div>
         </form>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16">
+        <div className="grid grid-cols-1 gap-16 sm:grid-cols-2 md:grid-cols-3">
           {filteredVehicules.map((car) => (
             <div
               key={car.id}
-              className="bg-white dark:bg-transparent space-y-3 border-2 border-gray-300 hover:border-primary p-4 rounded-xl relative group  hover:shadow-xl"
+              className="relative p-4 space-y-3 bg-white border-2 border-gray-300 dark:bg-transparent hover:border-primary rounded-xl group hover:shadow-xl"
             >
               <div className="w-full h-[120px] mb-16">
                 <img
@@ -150,14 +150,14 @@ const Vehicules = () => {
                 />
               </div>
               <div className="space-y-2">
-                <h1 className="text-primary font-semibold">
+                <h1 className="font-semibold text-primary">
                   {car.marque} - {car.modele}
                 </h1>
-                <div className="flex justify-between items-center text-xl font-semibold">
+                <div className="flex items-center justify-between text-xl font-semibold">
                   <p>{car.tarif}/Day</p>
                   <button
                     onClick={() => Navigate(`/vehicules/reserver/${car.id}`)}
-                    className="rounded-full p-2 hover:bg-primary hover:text-white duration-300"
+                    className="p-2 duration-300 rounded-full hover:bg-primary hover:text-white"
                   >
                     Réserver
                   </button>

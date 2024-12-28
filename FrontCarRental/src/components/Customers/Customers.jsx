@@ -168,7 +168,7 @@ export default function Customers() {
             {records.map((client) => (
               <tr key={client.id} className="hover:bg-[#fff4ea] dark:hover:bg-[#282019]">
                 <td className="flex items-center gap-4 px-4 py-3 font-bold text-gray-500 dark:text-gray-100">
-                  <div className='bg-center bg-cover h-11 w-11 rounded-2xl bg-sky-500 ' style={{ backgroundImage: `url(${image})` }}></div>
+                  <div className='bg-center bg-cover h-11 w-11 rounded-2xl bg-sky-500 ' style={{ backgroundImage: `url(${client.image})` }}></div>
                     {client.nom}
                   
                 </td>

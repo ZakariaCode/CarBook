@@ -6,6 +6,7 @@ import {Link, useLocation} from 'react-router-dom'
 import classNames from 'classnames';
 
 
+
 const linkClasses='flex items-center gap-2 font-light px-3 py-5 rounded-lg text-base active:bg-amber-500'
 export default function Sidebar({issideBarToggle,setIsSideBarToggle,theme,setTheme}) {
     const sidebarRef = useRef(null)// pour déterminer si un click se produit à l'intérieur ou à l'extérieur de cet élément.
@@ -36,12 +37,12 @@ export default function Sidebar({issideBarToggle,setIsSideBarToggle,theme,setThe
           <div className='flex items-center pt-3'>
             {theme==='dark'?
             (
-              <div className='h-20 w-28 rounded-full bg-inherit bg-cover bg-center' style={{ backgroundImage: `url(${imageDark})` }}></div>
+              <div className='h-20 bg-center bg-cover rounded-full w-28 bg-inherit' style={{ backgroundImage: `url(${imageDark})` }}></div>
             ):(
-              <div className='h-14 w-24 rounded-full bg-inherit bg-cover bg-center mr-3' style={{ backgroundImage: `url(${imageLight})` }}></div>
+              <div className='w-24 mr-3 bg-center bg-cover rounded-full h-14 bg-inherit' style={{ backgroundImage: `url(${imageLight})` }}></div>
             )
             }
-            <span className='dark:text-neutral-100 text-black text-lg'>Car</span> 
+            <span className='text-lg text-black dark:text-neutral-100'>Car</span> 
           </div>
           <div className='py-16'>
             {DASHBOARD_SIDEBAR_LINKS.map((item)=>(

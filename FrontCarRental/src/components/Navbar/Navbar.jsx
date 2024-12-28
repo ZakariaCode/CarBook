@@ -45,18 +45,17 @@ const Navbar = ({ theme, setTheme }) => {
 
   return (
     <nav
-      className="shadow-md fixed bg-white/95 dark:bg-dark/95 dark:text-white
-    duration-300 z-40 w-full"
+      className="fixed z-40 w-full duration-300 shadow-md bg-white/95 dark:bg-dark/95 dark:text-white"
     >
-      <div className="mx-4 py-3 md:py-0">
-        <div className="flex justify-between items-center">
+      <div className="py-3 mx-4 md:py-0">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="justify-start">
             <img src={logo} alt="logo" width={80} height={80} />
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block justify-center">
+          <div className="justify-center hidden md:block">
             <ul className="flex items-center gap-8">
               {NavLinks.map((data) => (
                 <li key={data.id} className="py-4">
@@ -87,7 +86,7 @@ const Navbar = ({ theme, setTheme }) => {
           </div>
 
           {/* Mobile Menu */}
-          <div className="flex items-center gap-4 md:hidden justify-end">
+          <div className="flex items-center justify-end gap-4 md:hidden">
             <div>
               {theme === "dark" ? (
                 <BiSolidSun
@@ -106,13 +105,13 @@ const Navbar = ({ theme, setTheme }) => {
               <HiMenuAlt1
                 onClick={toggleMenu}
                 size={30}
-                className="cursor-pointer transition-all"
+                className="transition-all cursor-pointer"
               />
             ) : (
               <HiMenuAlt3
                 onClick={toggleMenu}
                 size={30}
-                className="cursor-pointer transition-all"
+                className="transition-all cursor-pointer"
               />
             )}
           </div>

@@ -43,10 +43,7 @@ export default function RecentRent() {
     <div className="dark:bg-[#121212] bg-white px-4 py-3 rounded-2xl border border-gray-200 flex flex-col">
       <div className='flex flex-col items-center justify-center mx-4 my-4 sm:flex-row lg:justify-between'>
       <strong className="mb-3 text-xl text-black dark:text-white ">Recent Rent</strong>
-      <div className='relative '>
-          <FaSearch className='absolute text-gray-500 -translate-y-1/2 top-1/2 left-3'></FaSearch>
-          <input type='text' placeholder='Search..' className='text-sm rounded-full focus:outline-none h-10 w-[40vw] lg:w-[20vw] px-3 pl-10 my-4  border border-gray-400 hover:border-gray-500 dark:border-gray-400 dark:hover:border-gray-500 bg-gray-200 dark:bg-gray-900'></input>
-        </div>
+      
       </div>
       
     

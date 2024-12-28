@@ -89,7 +89,7 @@ export default function Header({issideBarToggle,setIsSideBarToggle,theme, setThe
                 
                 <div className='relative '>
                   <CgProfile fontSize={22} className='absolute text-gray-600 -translate-y-1/2 dark:text-gray-200 top-1/2 left-2'></CgProfile>
-                  <button onClick={()=>navigate('/profil')} className='block w-full px-3 pl-10 mb-4 text-left text-gray-600 dark:text-gray-200'>profile</button>
+                  <button onClick={()=>navigate('/admin/profil')} className='block w-full px-3 pl-10 mb-4 text-left text-gray-600 dark:text-gray-200'>profile</button>
                 </div>
               </Menu.Item>
               <Menu.Item>

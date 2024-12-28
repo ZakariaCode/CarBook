@@ -9,25 +9,25 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
-		path: '/',
+		path: '/admin',
 		icon: <HiOutlineViewGrid />
 	},
 	{
 		key: 'cars',
 		label: 'Cars',
-		path: '/cars',
+		path: '/admin/cars',
 		icon: <HiOutlineCube />
 	},
 	{
 		key: 'customers',
 		label: 'Customers',
-		path: '/customers',
+		path: '/admin/customers',
 		icon: <HiOutlineUsers />
 	},
 	{
 		key: 'reservations',
 		label: 'Reservations',
-		path: '/reservations',
+		path: '/admin/reservations',
 		icon: <HiOutlineShoppingCart />
 	}
 ]

@@ -8,7 +8,7 @@ import {
   ValideDate
 } from "../../services/ReservationService";
 import {generateIdContrat} from "../../services/ContratService";
-import { getcar } from "../../services/VehiculesService";
+import { getcar } from "../../services/VehiculeService";
 import { addContrat } from "../../services/ContratService";
 import { addPaiement } from "../../services/PaiementService";
 
@@ -162,12 +162,12 @@ function PayPalCheckout() {
   }
 
   return (
-    <div className="h-screen dark:bg-dark dark:text-white flex justify-center items-center p-4">
-      <div className="w-full max-w-md bg-gray-800/4 p-6 rounded-lg shadow-xl">
-        <h2 className="text-2xl font-semibold text-center mb-6">
+    <div className="flex items-center justify-center h-screen p-4 dark:bg-dark dark:text-white">
+      <div className="w-full max-w-md p-6 rounded-lg shadow-xl bg-gray-800/4">
+        <h2 className="mb-6 text-2xl font-semibold text-center">
           Complete Your Payment
         </h2>
-        <p className="text-center text-lg mb-6">
+        <p className="mb-6 text-lg text-center">
           You are about to pay <strong>{montant.toFixed(2)} USD</strong> for
           your reservation.
         </p>
@@ -191,10 +191,10 @@ function PayPalCheckout() {
           />
         </PayPalScriptProvider>
         <div className="flex justify-between mt-4">
-          <button className="bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600">
+          <button className="p-2 text-white bg-gray-700 rounded-md hover:bg-gray-600">
             <span className="text-sm">Pay with Credit Card</span>
           </button>
-          <button className="bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600">
+          <button className="p-2 text-white bg-gray-700 rounded-md hover:bg-gray-600">
             <span className="text-sm">PayPal Credit</span>
           </button>
         </div>

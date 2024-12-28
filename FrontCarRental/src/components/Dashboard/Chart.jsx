@@ -40,7 +40,11 @@ export default function Chart(){
   }, []);
     return (
     <div className='h-[24rem] w-full dark:bg-[#121212] bg-white p-4 rounded-2xl border border-gray-200 flex flex-col flex-1 '>
-        <strong class='text-black dark:text-white font font-medium mb-3'>Reservation & Revenu</strong>
+      <div>
+      <strong class='text-black dark:text-white font font-medium mb-3'>Reservation & Revenu</strong>
+      <input type="date"></input>
+      </div>
+        
         <div className='flex-1 w-full mt-2 text-xs'>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart width={500} height={300} data={data} margin={{

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar'
 import Header from './Header'
 
@@ -33,11 +33,11 @@ export default function Layout() {
       <div className={`transition-all ${issideBarToggle ? "ml-0 " : "lg:ml-8 lg:my-9"}`}>
         <Sidebar issideBarToggle={issideBarToggle} setIsSideBarToggle={setIsSideBarToggle} theme={theme} setTheme={setTheme}/>
       </div>
-      <div className='flex-1 flex flex-col '>
+      <div className='flex flex-col flex-1 '>
         {issideBarToggle && (
           <div 
             onClick={() => setIsSideBarToggle(false)} 
-            className="fixed inset-0 bg-black opacity-50 z-30 lg:hidden "
+            className="fixed inset-0 z-30 bg-black opacity-50 lg:hidden "
           ></div>
         )}
         <div className="fixed top-0 left-0 right-4 z-20 bg-[#fff4ea]  dark:bg-[#282019] py-5 lg:ml-64">
@@ -48,7 +48,7 @@ export default function Layout() {
                     setTheme={setTheme}
                   />
         </div>
-        <div className='flex-1 overflow-y-auto p-4 pt-16  ' issideBarToggle={issideBarToggle} setIsSideBarToggle={setIsSideBarToggle} theme={theme}>{<Outlet/>}</div>
+        <div className='flex-1 p-4 pt-16 overflow-y-auto ' issideBarToggle={issideBarToggle} setIsSideBarToggle={setIsSideBarToggle} theme={theme}>{<Outlet/>}</div>
       </div>
     </div>
   )
