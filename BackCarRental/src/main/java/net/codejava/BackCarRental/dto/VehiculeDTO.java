@@ -20,7 +20,7 @@ public class VehiculeDTO {
     private float tarif;
     private String carburant;
     private String matricule;
-    private Date annee;
+    private int annee;
     private String image;
     private List<Long> reservationIds;
 

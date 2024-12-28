@@ -24,7 +24,7 @@ public class Vehicule {
     private float tarif;
     private String carburant;
     private String matricule;
-    private Date annee;
+    private int annee;
     private String image;
     @OneToMany(mappedBy = "vehicule")
     private Collection<Reservation> reservations;
