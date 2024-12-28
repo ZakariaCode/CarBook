@@ -2,14 +2,19 @@ import React,{useEffect, useState} from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {getRevenuParMois} from '../../services/PaiementService'
 import {getNombreReservationsParMois} from '../../services/ReservationService'
-export default function Chart(){
+export default function Chart({year}){
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
   const [data, setData]=useState([]);
+  const selectedYear = year || new Date().getFullYear();
   useEffect(() => {
     const monthNames = ["Janv", "Févr", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Sept", "Oct", "Nov", "Déc"];
-
     Promise.all([
-      getRevenuParMois(2024),
-      getNombreReservationsParMois(2024)
+      getRevenuParMois(selectedYear),
+      getNombreReservationsParMois(selectedYear)
     ])
       .then(([revenuResponse, reservationsResponse]) => {
         const revenus = revenuResponse.data.map(item => ({
@@ -37,13 +42,10 @@ export default function Chart(){
         console.log(mergedData);
       })
       .catch(error => console.error("Error fetching data", error));
-  }, []);
+  }, [selectedYear]);
     return (
     <div className='h-[24rem] w-full dark:bg-[#121212] bg-white p-4 rounded-2xl border border-gray-200 flex flex-col flex-1 '>
-      <div>
       <strong class='text-black dark:text-white font font-medium mb-3'>Reservation & Revenu</strong>
-      <input type="date"></input>
-      </div>
         
         <div className='flex-1 w-full mt-2 text-xs'>
             <ResponsiveContainer width="100%" height="100%">

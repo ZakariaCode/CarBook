@@ -36,7 +36,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default function CustomerChart() {
+export default function CustomerChart({year}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [data, setData] = useState([]);
     

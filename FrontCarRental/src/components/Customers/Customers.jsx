@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import image from '../../assets/basil.jpg'
 import {MdEdit} from 'react-icons/md'
 import {listClient,updateClient} from '../../services/ClientService'
+import {FaSearch} from 'react-icons/fa'
 
 export default function Customers() {
   const [clients, setClients]=useState([]);
@@ -12,12 +13,17 @@ export default function Customers() {
         console.error(error);
       })
     },[])
+    const [search, setSearch]=useState('');
   const [currentPage,setCurrentPage]=useState(1);
+  const filteredCustomers = clients.filter((customer) =>
+    customer.nom && customer.nom.toLowerCase().includes(search.toLowerCase())
+  );
+    
   const recordsPerPage=5;
   const lastIndex=currentPage*recordsPerPage;
   const firstIndex=lastIndex-recordsPerPage;
-  const records=clients.slice(firstIndex,lastIndex);
-  const npage=Math.ceil(clients.length/recordsPerPage);
+  const records=filteredCustomers.slice(firstIndex,lastIndex);
+  const npage=Math.ceil(filteredCustomers.length/recordsPerPage);
   const numbers=[...Array(npage+1).keys()].slice(1)
   const [editCustomer, setEditCustomer] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState(null);
@@ -35,6 +41,7 @@ export default function Customers() {
     setCustomer(customerToEdit);
     setEditCustomer(true); 
   };
+  
 
   const closeEditCustomer = () => {
     setEditCustomer(false);
@@ -56,6 +63,14 @@ export default function Customers() {
     };
 
   return (
+    <>
+    <div className='relative z-40  top-[-30px] left-14 lg:left-8 flex gap-4 '>
+          <div className='relative'>
+            <FaSearch className='absolute text-gray-500 -translate-y-1/2 bg top-1/2 left-3'></FaSearch>
+            <input type='text' placeholder='Search..' onChange={(e)=>setSearch(e.target.value)}  className='text-sm rounded-full bg-white dark:bg-black focus:outline-none h-10 w-[30vw] lg:w-[20vw] px-3 pl-10  border border-gray-500'></input>
+          </div>
+        </div>
+    
     <div className="dark:bg-[#121212] bg-white px-4 py-3 rounded-2xl border border-gray-200 flex flex-col mt-10 lg:mx-10 w-screen-short ">
       <div className='flex flex-col items-center justify-between mx-4 my-4 sm:flex-row'>
       <strong className="mx-5 my-3 text-xl text-gray-700 dark:text-white ">Customers</strong>
@@ -218,7 +233,7 @@ export default function Customers() {
         </nav>
     </div>
     
-    
+    </>
   )
   function prePage(){
     if(currentPage !== 1){
