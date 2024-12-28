@@ -2,6 +2,9 @@ package net.codejava.BackCarRental.mapper;
 
 import net.codejava.BackCarRental.dto.AvisDTO;
 import net.codejava.BackCarRental.model.Avis;
+import net.codejava.BackCarRental.model.Client;
+import net.codejava.BackCarRental.model.Reservation;
+import net.codejava.BackCarRental.model.Vehicule;
 
 public class AvisMapper {
     public static AvisDTO mapToAvisDTO(Avis avis){
@@ -15,5 +18,17 @@ public class AvisMapper {
         avisDTO.setClientId(avis.getClient().getId());
 
         return avisDTO;
+    }
+
+    public static Avis mapToAvis(AvisDTO avisDTO) {
+        Avis avis = new Avis();
+        if (avis.getClient() == null) {
+            avis.setClient(new Client());
+        }
+        avis.setId(avisDTO.getId());
+        avis.setAvis(avisDTO.getAvis());
+        avis.setNbrEtoile(avis.getNbrEtoile());
+        avis.getClient().setId(avisDTO.getId());
+        return avis;
     }
 }

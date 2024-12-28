@@ -12,7 +12,7 @@ public class PaiementMapper {
         return new PaiementDTO(
                 paiement.getId(),
                 paiement.getDatePaiement(),
-                paiement.getMethodePaiement()!= null ? paiement.getMethodePaiement().name() : null,
+                paiement.getMethodePaiement(),
                 paiement.getMontant(),
                 reservationId
         );
@@ -24,7 +24,7 @@ public class PaiementMapper {
         }
         paiement.setId(paiementDTO.getId());
         paiement.setDatePaiement(paiementDTO.getDatePaiement());
-        paiement.setMethodePaiement(MethodePaiement.valueOf(paiementDTO.getMethodePaiement()));
+        paiement.setMethodePaiement(paiementDTO.getMethodePaiement());
         paiement.setMontant(paiementDTO.getMontant());
         paiement.getReservation().setId(paiementDTO.getReservationId());
         return paiement;

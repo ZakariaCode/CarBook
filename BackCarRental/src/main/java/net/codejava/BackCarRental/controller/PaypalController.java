@@ -3,6 +3,7 @@ package net.codejava.BackCarRental.controller;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import lombok.AllArgsConstructor;
 import net.codejava.BackCarRental.service.Impl.PaypalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/paypal")
+@AllArgsConstructor
 @CrossOrigin
 public class PaypalController {
     @Autowired

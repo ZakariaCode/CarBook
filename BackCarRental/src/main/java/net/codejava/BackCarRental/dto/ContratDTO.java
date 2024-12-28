@@ -9,8 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContratDTO {
-    private Long id;
-    private String reglement ;
+    private String id;
     private Date date;
     private Long reservationId;
 }

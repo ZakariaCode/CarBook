@@ -1,6 +1,7 @@
 package net.codejava.BackCarRental.service.Impl;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.codejava.BackCarRental.dto.VehiculeDTO;
 import net.codejava.BackCarRental.exception.ResourceNotFoundException;
 import net.codejava.BackCarRental.mapper.VehiculeMapper;
@@ -103,6 +104,13 @@ public class VehiculeServiceImpl implements VehiculeService {
     };
     public Long getTotalVehicles() {
         return vehiculeRepository.getTotalVehicules();
+    }
+
+    @Override
+    public List<VehiculeDTO> popularCars(){
+        List<Vehicule> vehicules=vehiculeRepository.popularCars();
+        return vehicules.stream().map(vehicule ->VehiculeMapper.mapToVehiculeDTO(vehicule))
+                .collect(Collectors.toList());
     }
 
 }

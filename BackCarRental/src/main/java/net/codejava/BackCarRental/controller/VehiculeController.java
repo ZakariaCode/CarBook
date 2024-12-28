@@ -61,5 +61,10 @@ public class VehiculeController {
         Long vehicules =vehiculeService.getTotalVehicles();
         return ResponseEntity.ok(vehicules);
     }
+    @GetMapping("/popularCars")
+    public ResponseEntity<List<VehiculeDTO>> popularCars(){
+        List<VehiculeDTO> vehicules =vehiculeService.popularCars();
+        return ResponseEntity.ok(vehicules);
+    }
 
 }

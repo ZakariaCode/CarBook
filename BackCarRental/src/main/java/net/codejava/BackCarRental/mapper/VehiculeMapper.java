@@ -4,8 +4,16 @@ import net.codejava.BackCarRental.dto.VehiculeDTO;
 import net.codejava.BackCarRental.model.StatutVehicule;
 import net.codejava.BackCarRental.model.Vehicule;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class VehiculeMapper {
     public static VehiculeDTO mapToVehiculeDTO(Vehicule vehicule){
+        List<Long> reservationIds = (vehicule.getReservations() != null) ?
+                vehicule.getReservations().stream()
+                        .map(reservation -> reservation.getId())
+                        .collect(Collectors.toList())
+                : List.of();
         return new VehiculeDTO(
                 vehicule.getId(),
                 vehicule.getMarque(),
@@ -17,7 +25,7 @@ public class VehiculeMapper {
                 vehicule.getMatricule(),
                 vehicule.getAnnee(),
                 vehicule.getImage(),
-                null
+                reservationIds
         );
     }
     public static Vehicule mapToVehicule(VehiculeDTO vehiculeDTO){

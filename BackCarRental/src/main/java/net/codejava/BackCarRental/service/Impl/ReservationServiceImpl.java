@@ -3,21 +3,30 @@ package net.codejava.BackCarRental.service.Impl;
 import net.codejava.BackCarRental.dto.ReservationDTO;
 import net.codejava.BackCarRental.exception.ResourceNotFoundException;
 import net.codejava.BackCarRental.mapper.ReservationMapper;
-import net.codejava.BackCarRental.model.Reservation;
-import net.codejava.BackCarRental.repository.ReservationRepository;
-import net.codejava.BackCarRental.service.IReservation;
+import net.codejava.BackCarRental.model.*;
+import net.codejava.BackCarRental.repository.*;
+import net.codejava.BackCarRental.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReservationServiceImpl  implements IReservation {
+public class ReservationServiceImpl  implements ReservationService {
     @Autowired
     private ReservationRepository reservationRepo;
     @Autowired
     private ReservationMapper reservationMapper;
+    @Autowired
+    private ContratRepository contratRepository;
+    @Autowired
+    private ClientRepository clientRepo;
+    @Autowired
+    private PaiementRepository paiementRepository;
+    @Autowired
+    private VehiculeRepository vehiculeRepository;
 
     @Override
     public ReservationDTO createReservation(ReservationDTO reservationDto) {
@@ -50,19 +59,30 @@ public class ReservationServiceImpl  implements IReservation {
     }
 
     @Override
-    public ReservationDTO updateReservation(ReservationDTO updatedReservation) {
-        Reservation reservation= reservationRepo.findById(updatedReservation.getId())
+    public ReservationDTO updateReservation(Long reservationId, ReservationDTO updatedReservation) {
+        Reservation reservation= reservationRepo.findById(reservationId)
                 .orElseThrow(()->
                         new ResourceNotFoundException("Reservation is not exist"+updatedReservation.getId()));
+        Client client= clientRepo.findById(updatedReservation.getClientId())
+                .orElseThrow(()->
+                        new ResourceNotFoundException("client is not exist"+updatedReservation.getClientId()));
+        Vehicule vehicule= vehiculeRepository.findById(updatedReservation.getVehiculeId())
+                .orElseThrow(()->
+                        new ResourceNotFoundException("Vehicule is not exist"+updatedReservation.getVehiculeId()));
+        Paiement paiement= paiementRepository.findById(updatedReservation.getPaiementId())
+                .orElseThrow(()->
+                        new ResourceNotFoundException("paiement is not exist"+updatedReservation.getPaiementId()));
+        Contrat contrat= contratRepository.findById(updatedReservation.getContratId())
+                .orElseThrow(()->
+                        new ResourceNotFoundException("contrat is not exist"+updatedReservation.getContratId()));
         reservation.setDateDebut(updatedReservation.getDateDebut());
         reservation.setDateFin(updatedReservation.getDateFin());
-        reservation.setVehicule(reservationRepo.findVehiculeById(updatedReservation.getVehiculeId()));
-        reservation.setClient(reservationRepo.findClientById(updatedReservation.getClientId()));
-        reservation.setPaiement(reservationRepo.findPaiementById(updatedReservation.getPaiementId()));
-        reservation.setContrat(reservationRepo.findContratById(updatedReservation.getContratId()) );
-
+        reservation.setVehicule(vehicule);
+        reservation.setClient(client);
+        reservation.setPaiement(paiement);
+        reservation.setContrat(contrat);
         Reservation updateReservationObj=reservationRepo.save(reservation);
-        return reservationMapper.mapToReservationDTO(updateReservationObj);
+        return ReservationMapper.mapToReservationDTO(updateReservationObj);
     }
 
     @Override

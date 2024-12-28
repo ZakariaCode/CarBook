@@ -12,10 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaiementDTO {
-    private Long id;
+    private String id;
     private Date datePaiement;
     private String methodePaiement;
     private float montant;
     private Long reservationId;
-
 }

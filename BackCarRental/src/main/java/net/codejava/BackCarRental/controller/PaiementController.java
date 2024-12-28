@@ -2,7 +2,10 @@ package net.codejava.BackCarRental.controller;
 
 import lombok.AllArgsConstructor;
 import net.codejava.BackCarRental.dto.PaiementDTO;
+import net.codejava.BackCarRental.dto.VehiculeDTO;
+import net.codejava.BackCarRental.model.Paiement;
 import net.codejava.BackCarRental.service.PaiementService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +18,13 @@ import java.util.List;
 public class PaiementController {
     private PaiementService paiementService;
     @PostMapping
-    public Paiement savePaiement(@RequestBody Paiement paiement) {
-        return paiementService.createPaiment(paiement);
+    public ResponseEntity<PaiementDTO> savePaiement(@RequestBody PaiementDTO paiementDTO){
+        PaiementDTO savePaiement=paiementService.createPaiement(paiementDTO);
+        return new ResponseEntity<>(savePaiement, HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<PaiementDTO> getPaiementById(@PathVariable("id") Long paiementId){
+    public ResponseEntity<PaiementDTO> getPaiementById(@PathVariable("id") String paiementId){
         PaiementDTO paiementDTO =paiementService.getPaiementById(paiementId);
         return ResponseEntity.ok(paiementDTO);
     }
@@ -28,7 +34,7 @@ public class PaiementController {
         return ResponseEntity.ok(paiements);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<PaiementDTO> updatePaiement(@PathVariable("id") Long paiementId, @RequestBody PaiementDTO updatePaiement){
+    public ResponseEntity<PaiementDTO> updatePaiement(@PathVariable("id") String paiementId, @RequestBody PaiementDTO updatePaiement){
         PaiementDTO paiementDTO=paiementService.updatePaiement(paiementId,updatePaiement);
         return ResponseEntity.ok(paiementDTO);
     }

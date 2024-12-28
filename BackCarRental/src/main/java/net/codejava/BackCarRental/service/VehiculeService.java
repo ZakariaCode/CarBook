@@ -13,4 +13,5 @@ public interface VehiculeService {
     void DeleteVehicule(Long vehiculeId);
     String uploadImage(Long vehiculeId, MultipartFile file);
     Long getTotalVehicles();
+    List<VehiculeDTO> popularCars();
 }

@@ -1,5 +1,6 @@
 package net.codejava.BackCarRental.controller;
 
+import lombok.AllArgsConstructor;
 import net.codejava.BackCarRental.service.IEmailSender;
 import net.codejava.BackCarRental.service.Impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/email")
 @CrossOrigin
 public class EmailController {
-
-    @Autowired
     private EmailService emailService;
-
 
     @PostMapping("/send-pdf")
     public ResponseEntity<String> sendEmailWithPdf(
