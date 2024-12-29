@@ -6,28 +6,31 @@ import net.codejava.BackCarRental.model.Avis;
 import net.codejava.BackCarRental.model.Client;
 import net.codejava.BackCarRental.model.Contrat;
 import net.codejava.BackCarRental.model.Reservation;
+import net.codejava.BackCarRental.repository.ContratRepository;
+import net.codejava.BackCarRental.repository.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ContratMapper {
 
-    public static Contrat mapToContrat(ContratDTO contratDto) {
-        Contrat contrat = new Contrat();
-        if (contrat.getReservation() == null) {
-            contrat.setReservation(new Reservation());
-        }
-        contrat.setId(contratDto.getId());
-        contrat.setDate(contratDto.getDate());
-        contrat.getReservation().setId(contratDto.getReservationId());
-        return contrat;
+    @Autowired
+    ContratRepository contratRepository;
+    public  Contrat mapToContrat(ContratDTO contratDto) {
+     return new Contrat(
+             contratDto.getId(),
+             contratDto.getDate(),null
+
+     );
     }
 
-    public static ContratDTO mapToContratDTO(Contrat saveContrat) {
+    public  ContratDTO mapToContratDTO(Contrat saveContrat) {
         if (saveContrat == null) {
             return null;
         }
         ContratDTO contratDTO = new ContratDTO();
         contratDTO.setId(saveContrat.getId());
         contratDTO.setDate(saveContrat.getDate());
-        contratDTO.setReservationId(saveContrat.getReservation().getId());
 
         return contratDTO;
     }

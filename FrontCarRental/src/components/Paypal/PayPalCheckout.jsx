@@ -24,6 +24,7 @@ function PayPalCheckout() {
       try {
         const reservationResponse = await getReservation(id);
         setReservation(reservationResponse.data);
+        console.log("Reservation data:", reservationResponse.data);
 
         if (reservationResponse.data?.vehiculeId) {
           const carResponse = await getcar(reservationResponse.data.vehiculeId);
@@ -89,6 +90,7 @@ function PayPalCheckout() {
 
   const onApprove = async (data,actions) => {
     try {
+      console.log("reservation id", reservation.id);
       const orderID = data.orderID;
       const paymentDetails = await actions.order.capture();
       console.log("Payment actions:", paymentDetails);
@@ -106,8 +108,7 @@ function PayPalCheckout() {
         return;
       }
       const idContrat = await generateIdContrat();
-
-      const contratResponse = await addContrat({id:idContrat, date: new Date() });
+      const contratResponse = await addContrat({id:idContrat, date: new Date()});
       const contrat = contratResponse.data;
       console.log("Contract created:", contrat);
 

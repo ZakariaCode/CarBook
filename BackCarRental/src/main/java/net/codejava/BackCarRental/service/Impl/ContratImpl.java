@@ -15,10 +15,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ContratImpl implements Icontrat {
     private ContratRepository contratRepository;
+    private ContratMapper contratMapper;
     @Override
     public ContratDTO createContrat(ContratDTO contratDto) {
-        Contrat contrat= ContratMapper.mapToContrat(contratDto);
+        Contrat contrat= contratMapper.mapToContrat(contratDto);
         Contrat saveContrat=contratRepository.save(contrat);
-        return ContratMapper.mapToContratDTO(saveContrat);
+        return contratMapper.mapToContratDTO(saveContrat);
     }
 }

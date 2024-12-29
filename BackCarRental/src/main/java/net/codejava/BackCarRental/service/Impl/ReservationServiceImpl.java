@@ -54,35 +54,24 @@ public class ReservationServiceImpl  implements ReservationService {
     @Override
     public List<ReservationDTO> getAllReservations() {
         List<Reservation> reservations=reservationRepo.findAll();
-        return reservations.stream().map(reservation ->ReservationMapper.mapToReservationDTO(reservation))
+        return reservations.stream().map(reservation ->reservationMapper.mapToReservationDTO(reservation))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ReservationDTO updateReservation(Long reservationId, ReservationDTO updatedReservation) {
-        Reservation reservation= reservationRepo.findById(reservationId)
+    public ReservationDTO updateReservation(ReservationDTO updatedReservation) {
+        Reservation reservation= reservationRepo.findById(updatedReservation.getId())
                 .orElseThrow(()->
                         new ResourceNotFoundException("Reservation is not exist"+updatedReservation.getId()));
-        Client client= clientRepo.findById(updatedReservation.getClientId())
-                .orElseThrow(()->
-                        new ResourceNotFoundException("client is not exist"+updatedReservation.getClientId()));
-        Vehicule vehicule= vehiculeRepository.findById(updatedReservation.getVehiculeId())
-                .orElseThrow(()->
-                        new ResourceNotFoundException("Vehicule is not exist"+updatedReservation.getVehiculeId()));
-        Paiement paiement= paiementRepository.findById(updatedReservation.getPaiementId())
-                .orElseThrow(()->
-                        new ResourceNotFoundException("paiement is not exist"+updatedReservation.getPaiementId()));
-        Contrat contrat= contratRepository.findById(updatedReservation.getContratId())
-                .orElseThrow(()->
-                        new ResourceNotFoundException("contrat is not exist"+updatedReservation.getContratId()));
         reservation.setDateDebut(updatedReservation.getDateDebut());
         reservation.setDateFin(updatedReservation.getDateFin());
-        reservation.setVehicule(vehicule);
-        reservation.setClient(client);
-        reservation.setPaiement(paiement);
-        reservation.setContrat(contrat);
+        reservation.setVehicule(reservationRepo.findVehiculeById(updatedReservation.getVehiculeId()));
+        reservation.setClient(reservationRepo.findClientById(updatedReservation.getClientId()));
+        reservation.setPaiement(reservationRepo.findPaiementById(updatedReservation.getPaiementId()));
+        reservation.setContrat(reservationRepo.findContratById(updatedReservation.getContratId()) );
+
         Reservation updateReservationObj=reservationRepo.save(reservation);
-        return ReservationMapper.mapToReservationDTO(updateReservationObj);
+        return reservationMapper.mapToReservationDTO(updateReservationObj);
     }
 
     @Override

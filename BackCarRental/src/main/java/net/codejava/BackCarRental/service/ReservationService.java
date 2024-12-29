@@ -9,7 +9,7 @@ public interface ReservationService {
     ReservationDTO createReservation(ReservationDTO reservationDto);
     ReservationDTO getReservationById(Long reservationId);
     List<ReservationDTO> getAllReservations();
-    ReservationDTO updateReservation(Long reservationId, ReservationDTO updatedReservation);
+    ReservationDTO updateReservation(ReservationDTO updatedReservation);
     void DeleteReservation(Long reservationId);
     Date getDatePaiementByReservationId(Long reservationId);
     String getVehiculeByReservationId(Long reservationId);

@@ -6,7 +6,7 @@ export const updateReservation = (reservation) => axios.post(REST_API_BASE_URL+"
 export const listReservations = () => axios.get(REST_API_BASE_URL);
 export const createReservation = (reservation) =>
   axios.post(REST_API_BASE_URL, reservation);
-export const getReservation = (id) => axios.get(`${REST_API_BASE_URL}/getReservation/${id}`);
+export const getReservation = (id) => axios.get(`${REST_API_BASE_URL}/${id}`);
 export const ValideDate = (datedebut, datefin) => {
   const now = new Date();
   const date1 = new Date(datedebut);

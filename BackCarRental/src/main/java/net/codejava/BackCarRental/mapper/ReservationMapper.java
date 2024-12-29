@@ -9,42 +9,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReservationMapper
 {
+    @Autowired
+    private ReservationRepository reservationRepo;
 
 
-    public static ReservationDTO mapToReservationDTO(Reservation reservation){
-        Long clientId = (reservation.getClient() != null) ? reservation.getClient().getId() : null;
-
+    public  ReservationDTO mapToReservationDTO(Reservation reservation){
         return new ReservationDTO(
                 reservation.getId(),
                 reservation.getDateDebut(),
                 reservation.getDateFin(),
-                reservation.getVehicule().getId(),
-                clientId,
-                reservation.getPaiement().getId(),
-                reservation.getContrat().getId()
+                reservation.getVehicule().getId() ,
+                reservation.getClient() != null ? reservation.getClient().getId() : null,
+                reservation.getPaiement() != null ? reservation.getPaiement().getId() : null,  // Paiement.getId() est un String
+                reservation.getContrat() != null ? reservation.getContrat().getId() : null
         );
     }
-    public static Reservation mapToReservation(ReservationDTO reservationDto) {
-        Reservation reservation = new Reservation();
-        if (reservation.getVehicule() == null) {
-            reservation.setVehicule(new Vehicule());
-        }
-        if (reservation.getClient() == null) {
-            reservation.setClient(new Client());
-        }
-        if (reservation.getPaiement() == null) {
-            reservation.setPaiement(new Paiement());
-        }
-        if (reservation.getContrat() == null) {
-            reservation.setContrat(new Contrat());
-        }
-        reservation.setId(reservationDto.getId());
-        reservation.setDateDebut(reservationDto.getDateDebut());
-        reservation.setDateFin(reservationDto.getDateFin());
-        reservation.getVehicule().setId(reservationDto.getVehiculeId());
-        reservation.getClient().setId(reservationDto.getClientId());
-        reservation.getPaiement().setId(reservationDto.getPaiementId());
-        reservation.getContrat().setId(reservationDto.getContratId());
-        return reservation;
+    public  Reservation mapToReservation(ReservationDTO reservationDTO){
+        return new Reservation(
+                reservationDTO.getId(),
+                reservationDTO.getDateDebut(),
+                reservationDTO.getDateFin(),
+                reservationRepo.findVehiculeById(reservationDTO.getVehiculeId()),
+                reservationRepo.findClientById(reservationDTO.getClientId()),
+                null,
+                null
+        );
     }
 }

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 public class ContratController {
     private ContratImpl Cservices;
     @PostMapping
-    public ResponseEntity<ContratDTO> saveContrat(@RequestBody ContratDTO contrat){
+    public ContratDTO saveContrat(@RequestBody ContratDTO contrat){
         ContratDTO saveContrat=Cservices.createContrat(contrat);
-        return new ResponseEntity<>(saveContrat, HttpStatus.CREATED);
+        return  saveContrat;
     }
 }
