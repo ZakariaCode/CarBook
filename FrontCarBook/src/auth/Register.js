@@ -5,14 +5,14 @@ function Register({ setAuthState }) {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [firstName, setfirstName] = React.useState('');
-    const [lastName, setlastName] = React.useState('');
+    const [Name, setName] = React.useState('');
+    const [Ville, setVille] = React.useState('');
     const [cin, setCin] = React.useState('');
     const navigate = useNavigate();
     
     // Exemple de gestion d'inscription via une API
     const handleRegister = async () => {
-        if (email && password && confirmPassword && firstName && lastName && cin) {
+        if (email && password && confirmPassword && Name && Ville && cin) {
             if (password !== confirmPassword) {
                 alert('Passwords do not match');
                 return;
@@ -26,8 +26,8 @@ function Register({ setAuthState }) {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        firstName,
-                        lastName,
+                        Name,
+                        Ville,
                         email,
                         password,
                         
@@ -60,27 +60,18 @@ function Register({ setAuthState }) {
                         Please fill in the details to create your account.
                     </p>
                     <div className="mt-8">
-                        {/* Name and First Name Side by Side */}
-                        <div className="flex gap-4">
+                        
+                            
                             <div className="flex flex-col w-1/2">
-                                <label className="text-lg font-medium">lastName</label>
+                                <label className="text-lg font-medium">Full Name</label>
                                 <input
-                                    value={lastName}
-                                    onChange={(e) => setlastName(e.target.value)}
-                                    className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
-                                    placeholder="Enter your name"
-                                />
-                            </div>
-                            <div className="flex flex-col w-1/2">
-                                <label className="text-lg font-medium">First Name</label>
-                                <input
-                                    value={firstName}
-                                    onChange={(e) => setfirstName(e.target.value)}
+                                    value={Name}
+                                    onChange={(e) => setName(e.target.value)}
                                     className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                     placeholder="Enter your first name"
                                 />
                             </div>
-                        </div>
+                        
 
                         
                         <div className="flex flex-col mt-4">
@@ -90,6 +81,15 @@ function Register({ setAuthState }) {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
                                     placeholder="Enter your email"
+                                />
+                            </div>
+                            <div className="flex flex-col w-1/2">
+                                <label className="text-lg font-medium">ville</label>
+                                <input
+                                    value={Ville}
+                                    onChange={(e) => setVille(e.target.value)}
+                                    className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+                                    placeholder="Enter your name"
                                 />
                             </div>
                             <div className="flex flex-col mt-4">
