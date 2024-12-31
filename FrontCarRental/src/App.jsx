@@ -24,8 +24,14 @@ import { Element } from "react-scroll";
 import Vehicules from "./components/CarList/Vehicules";
 import PayPalCheckout from "./components/Paypal/PayPalCheckout";
 import Avis from "./components/Avis/Avis";
+import Register from "./auth/Register";
+import Forgotpassword from "./auth/Forgotpassword";
+import ResetPassword from "./auth/Resetpassword";
+import Login from "./auth/Login";
 
 const App = () => {
+  const [authState, setAuthState] = useState('login');
+
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
   );
@@ -104,6 +110,10 @@ const App = () => {
 
           {/* Login Route */}
           <Route path="/login" element={<div>This is the login page</div>} />
+          <Route path="/" element={<Login />} />
+                <Route path="/forgot-password" element={<Forgotpassword />} />
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/reset-password" element={<ResetPassword />}/>
         </Routes>
       </div>
     </Router>
