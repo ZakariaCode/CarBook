@@ -40,6 +40,11 @@ public class ReservationServiceImpl  implements ReservationService {
         }
 
         Reservation savedReservation=reservationRepo.save(reservation);
+        Vehicule vehicule = reservation.getVehicule();
+        if (vehicule != null) {
+            vehicule.setStatut(StatutVehicule.louee);
+            vehiculeRepository.save(vehicule);
+        }
         return reservationMapper.mapToReservationDTO(savedReservation);
     }
 
@@ -59,17 +64,16 @@ public class ReservationServiceImpl  implements ReservationService {
     }
 
     @Override
-    public ReservationDTO updateReservation(ReservationDTO updatedReservation) {
-        Reservation reservation= reservationRepo.findById(updatedReservation.getId())
+    public ReservationDTO updateReservation(Long reservationId,ReservationDTO updatedReservation) {
+        Reservation reservation= reservationRepo.findById(reservationId)
                 .orElseThrow(()->
-                        new ResourceNotFoundException("Reservation is not exist"+updatedReservation.getId()));
+                        new ResourceNotFoundException("Reservation is not exist"+reservationId));
         reservation.setDateDebut(updatedReservation.getDateDebut());
         reservation.setDateFin(updatedReservation.getDateFin());
         reservation.setVehicule(reservationRepo.findVehiculeById(updatedReservation.getVehiculeId()));
         reservation.setClient(reservationRepo.findClientById(updatedReservation.getClientId()));
         reservation.setPaiement(reservationRepo.findPaiementById(updatedReservation.getPaiementId()));
-        reservation.setContrat(reservationRepo.findContratById(updatedReservation.getContratId()) );
-
+        reservation.setContrat(reservationRepo.findContratById(updatedReservation.getContratId()));
         Reservation updateReservationObj=reservationRepo.save(reservation);
         return reservationMapper.mapToReservationDTO(updateReservationObj);
     }

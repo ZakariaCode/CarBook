@@ -35,9 +35,10 @@ public class ReservationController {
         ReservationDTO saveReservation=Rservices.createReservation(reservationDTO);
         return new ResponseEntity<>(saveReservation, HttpStatus.CREATED);
     }
-    @PostMapping("/update")
-    public ReservationDTO updateReservation(@RequestBody ReservationDTO updateReservation){
-        return Rservices.updateReservation(updateReservation);
+    @PostMapping("/{id}")
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable("id") Long reservationId,@RequestBody ReservationDTO updateReservation){
+        ReservationDTO reservation=Rservices.updateReservation(reservationId,updateReservation);
+        return ResponseEntity.ok(reservation);
     }
     @GetMapping("/paiement/{id}")
     public ResponseEntity<Date> getDatePaiementByReservationId(@PathVariable("id") Long reservationId){

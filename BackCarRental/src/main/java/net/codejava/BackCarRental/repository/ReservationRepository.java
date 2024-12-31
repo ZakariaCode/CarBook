@@ -36,4 +36,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT COUNT(DISTINCT r.client.id) FROM Reservation r")
     Long countClientsFideles();
 
+    @Query("SELECT r FROM Reservation r WHERE r.dateFin < CURRENT_DATE AND r.vehicule.id IN :vehiculeIds")
+    List<Reservation> findExpiredReservationsByVehiculeIds(@Param("vehiculeIds") List<Long> vehiculeIds);
+
 }

@@ -9,7 +9,6 @@ public interface ReservationService {
     ReservationDTO createReservation(ReservationDTO reservationDto);
     ReservationDTO getReservationById(Long reservationId);
     List<ReservationDTO> getAllReservations();
-    ReservationDTO updateReservation(ReservationDTO updatedReservation);
     void DeleteReservation(Long reservationId);
     Date getDatePaiementByReservationId(Long reservationId);
     String getVehiculeByReservationId(Long reservationId);
@@ -17,4 +16,5 @@ public interface ReservationService {
     Long getTotalReservations();
     List<Object[]> getNombreReservationsParMois(int year);
     Long countClientsFideles();
+    ReservationDTO updateReservation(Long reservationId, ReservationDTO updateReservation);
 }
