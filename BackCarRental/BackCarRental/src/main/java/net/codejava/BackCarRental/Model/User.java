@@ -13,8 +13,8 @@ import java.util.Collections;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "user")
-public class User implements UserDetails {
+@Table(name = "Utilisateur")
+public class Utilisateur implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
