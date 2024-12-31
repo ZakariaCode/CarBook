@@ -134,8 +134,8 @@ function PayPalCheckout() {
       console.log("Reservation updated:", updatedReservationResponse.data);
 
       await Promise.all([
-        sendPDFByEmail("elhajjamzakaria1@gmail.com", "contrat", {nom: "Zakaria elhajjam",cin: "EE123456",numContrat: contrat.id,marque: `${car.marque} ${car.modele}`,matricule: car.matricule}),
-        sendPDFByEmail("elhajjamzakaria1@gmail.com", "facture", {
+        sendPDFByEmail("sawssanatiq@gmail.com", "contrat", {nom: "Zakaria elhajjam",cin: "EE123456",numContrat: contrat.id,marque: `${car.marque} ${car.modele}`,matricule: car.matricule}),
+        sendPDFByEmail("sawssanatiq@gmail.com", "facture", {
           montant: montant,
           tarif: car.tarif,
           nom: "Zakaria elhajjam",
@@ -175,7 +175,7 @@ function PayPalCheckout() {
         <PayPalScriptProvider
           options={{
             "client-id":
-              "AX4fqp9gpqEsrNj0-pXpBmlrmTfZySnc0rxuUz9VOkpSjnozIHfoRKApP1xPlo54LZ4ImrXC0VPJ5xZy",
+              "AQ-2Tf9Lg10HZ6Gym6I-xBA4jvzRsO2BrCiblNLKfKAyHFYn4q4fY5-aB_6ooftqHbNKu1TZgFgaU0PK",
             components: "buttons",
             currency: "USD",
           }}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const REST_API_BASE_URL = "http://localhost:8080/reservations";
-export const updateReservation = (reservation) => axios.post(REST_API_BASE_URL+"/update",reservation);
+export const updateReservation = (idReser,reservation) => axios.post(REST_API_BASE_URL+"/"+idReser,reservation);
 
 export const listReservations = () => axios.get(REST_API_BASE_URL);
 export const createReservation = (reservation) =>
