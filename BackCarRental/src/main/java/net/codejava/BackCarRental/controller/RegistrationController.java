@@ -1,6 +1,6 @@
-package net.codejava.backcarrental.controller;
-import net.codejava.backcarrental.dto.RegistrationRequest;
-import net.codejava.backcarrental.service.RegistrationService;
+package net.codejava.BackCarRental.controller;
+import net.codejava.BackCarRental.dto.RegistrationRequest;
+import net.codejava.BackCarRental.service.Impl.RegistrationService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

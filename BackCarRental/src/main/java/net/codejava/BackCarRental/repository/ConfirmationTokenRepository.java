@@ -1,6 +1,6 @@
-package net.codejava.backcarrental.repository;
+package net.codejava.BackCarRental.repository;
 
-import net.codejava.backcarrental.Model.ConfirmationToken;
+import net.codejava.BackCarRental.model.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package net.codejava.backcarrental.security.Impl;
+package net.codejava.BackCarRental.security.Impl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

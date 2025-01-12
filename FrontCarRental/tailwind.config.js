@@ -12,7 +12,17 @@ export default {
       },
       colors:{
         primary:"#ffc727",
-        dark:"#111111"
+        dark:"#111111",
+        customYellow: "#ffc727",
+      },
+      animation: {
+        flash: "flash 1.5s infinite",
+      },
+      keyframes: {
+        flash: {
+          "0%, 100%": { opacity: "0" },
+          "50%": { opacity: "1" },
+        },
       },
       container:{
         center:true,
@@ -25,4 +35,3 @@ export default {
   },
   plugins: [],
 }
-

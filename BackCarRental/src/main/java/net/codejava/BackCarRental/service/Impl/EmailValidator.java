@@ -1,4 +1,4 @@
-package net.codejava.backcarrental.service;
+package net.codejava.BackCarRental.service.Impl;
 
 import org.springframework.stereotype.Component;
 

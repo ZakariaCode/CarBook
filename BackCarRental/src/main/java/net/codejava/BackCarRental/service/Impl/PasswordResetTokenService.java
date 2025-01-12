@@ -1,9 +1,9 @@
-package net.codejava.backcarrental.service;
+package net.codejava.BackCarRental.service.Impl;
 
 
-import net.codejava.backcarrental.Model.PasswordResetToken;
-import net.codejava.backcarrental.repository.PasswordResetTokenRepository;
-import net.codejava.backcarrental.Model.Utilisateur;
+import net.codejava.BackCarRental.model.PasswordResetToken;
+import net.codejava.BackCarRental.model.Utilisateur;
+import net.codejava.BackCarRental.repository.PasswordResetTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

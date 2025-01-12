@@ -1,4 +1,4 @@
-package net.codejava.backcarrental.security.config;
+package net.codejava.BackCarRental.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,7 +13,11 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*, http://localhost:3000, http://localhost:4200, http://localhost:8080, http://localhost:8081")
+                        .allowedOrigins(" http://localhost:3000"
+                                , "http://localhost:4200",
+                                "http://localhost:8080",
+                                "http://localhost:8081"
+                                ,"http://localhost:5173")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
         };

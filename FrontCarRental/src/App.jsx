@@ -1,16 +1,17 @@
-import React, { useEffect, useState,useLocation } from "react";
+import React, { useEffect, useState, useLocation } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
-import About from './components/About/About';
-import Services from './components/Services/Services';
-import Layout from './components/shared/Layout';
-import Dashboard from './components/Dashboard/Dashboard';
-import Cars from './components/Cars/Cars';
-import Customers from './components/Customers/Customers';
-import Reservations from './components/Reservations/Reservations';
-import Profil from './components/Profil/Profil';
+import About from "./components/About/About";
+import Services from "./components/Services/Services";
+import Layout from "./components/shared/Layout";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Cars from "./components/Cars/Cars";
+import Customers from "./components/Customers/Customers";
+import Reservations from "./components/Reservations/Reservations";
+import Profil from "./components/Profil/Profil";
 // Import correct pour AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -25,7 +26,13 @@ import Vehicules from "./components/CarList/Vehicules";
 import PayPalCheckout from "./components/Paypal/PayPalCheckout";
 import Avis from "./components/Avis/Avis";
 
+import Register from "./components/auth/Register";
+import Forgotpassword from "./components/auth/Forgotpassword";
+import ResetPassword from "./components/auth/ResetPassword";
+import Login from "./components/auth/Login";
+
 const App = () => {
+  const [authState, setAuthState] = useState('login'); 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
   );
@@ -50,16 +57,16 @@ const App = () => {
       delay: 100,
     });
   }, []);
-  
-  const isUserRoute = location.pathname.startsWith("/admin");;
+
+  const isUserRoute = location.pathname.startsWith("/admin");
 
   return (
     <Router>
       <div className="bg-white dark:bg-black dark:text-white">
-      {!isUserRoute && <Navbar theme={theme} setTheme={setTheme} />}
+        {!isUserRoute && <Navbar theme={theme} setTheme={setTheme} />}
         <Routes>
           {/* Main Home Page Route */}
-          
+
           <Route
             path="/"
             element={
@@ -86,13 +93,13 @@ const App = () => {
               </div>
             }
           />
-          
+
           {/* Vehicle Routes */}
           <Route path="/vehicules" element={<Vehicules />} />
           <Route path="/vehicules/reserver/:id" element={<Reservation />} />
           <Route path="/vehicules/paiment/:id" element={<PayPalCheckout />} />
           <Route path="/Avis" element={<Avis />} />
-          
+
           {/* Admin Routes */}
           <Route path="/admin" element={<Layout />}>
             <Route index element={<Dashboard />} />
@@ -101,9 +108,13 @@ const App = () => {
             <Route path="reservations" element={<Reservations />} />
             <Route path="profil" element={<Profil />} />
           </Route>
-
-          {/* Login Route */}
-          <Route path="/login" element={<div>This is the login page</div>} />
+        
+            {/* Auth Routes */}
+          <Route path="/forgot-password" element={<Forgotpassword />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+         
+          <Route path="/login" element={<Login/>} />
         </Routes>
       </div>
     </Router>

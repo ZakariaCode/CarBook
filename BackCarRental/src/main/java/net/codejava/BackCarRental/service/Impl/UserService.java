@@ -1,8 +1,9 @@
-package net.codejava.backcarrental.service;
+package net.codejava.BackCarRental.service.Impl;
 
-import net.codejava.backcarrental.Model.Utilisateur;
-import net.codejava.backcarrental.repository.UserRepository;
-import net.codejava.backcarrental.Model.ConfirmationToken;
+import net.codejava.BackCarRental.model.ConfirmationToken;
+import net.codejava.BackCarRental.model.Utilisateur;
+import net.codejava.BackCarRental.repository.AdminConfig;
+import net.codejava.BackCarRental.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,15 +21,25 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
 
+    private AdminConfig adminConfig;
+
     public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                       ConfirmationTokenService confirmationTokenService) {
+                       ConfirmationTokenService confirmationTokenService,AdminConfig adminConfig) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.confirmationTokenService = confirmationTokenService;
+        this.adminConfig=adminConfig;
+
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        if (email.equals(adminConfig.getAdminEmail())) {
+            Utilisateur admin = new Utilisateur();
+            admin.setEmail(adminConfig.getAdminEmail());
+            admin.setRole("Admin");
+            return admin;
+        }
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
     }
@@ -61,6 +72,9 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean authenticate(String email, String password) {
+        if (email.equals(adminConfig.getAdminEmail())) {
+            return password.equals(adminConfig.getAdminPassword());
+        }
         Optional<Utilisateur> user = userRepository.findByEmail(email);
         return user.filter(u -> bCryptPasswordEncoder.matches(password, u.getPassword())).isPresent();
     }

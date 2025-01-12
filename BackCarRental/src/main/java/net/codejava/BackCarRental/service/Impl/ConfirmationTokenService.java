@@ -1,8 +1,8 @@
-package net.codejava.backcarrental.service;
+package net.codejava.BackCarRental.service.Impl;
 
 
-import net.codejava.backcarrental.Model.ConfirmationToken;
-import net.codejava.backcarrental.repository.ConfirmationTokenRepository;
+import net.codejava.BackCarRental.model.ConfirmationToken;
+import net.codejava.BackCarRental.repository.ConfirmationTokenRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

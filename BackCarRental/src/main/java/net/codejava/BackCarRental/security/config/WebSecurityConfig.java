@@ -1,6 +1,6 @@
-package net.codejava.backcarrental.security.config;
+package net.codejava.BackCarRental.security.config;
 
-import net.codejava.backcarrental.service.UserService;
+import net.codejava.BackCarRental.service.Impl.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,7 +21,8 @@ public class WebSecurityConfig  {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF for testing
+        http.csrf(AbstractHttpConfigurer::disable)
+                // Disable CSRF for testing
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/registration/**","/api/v1/login/**","/api/v1/login/forgot-password").permitAll()
                         .anyRequest().authenticated()

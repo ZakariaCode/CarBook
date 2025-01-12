@@ -1,6 +1,6 @@
-package net.codejava.backcarrental.repository;
+package net.codejava.BackCarRental.repository;
 
-import net.codejava.backcarrental.Model.PasswordResetToken;
+import net.codejava.BackCarRental.model.PasswordResetToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

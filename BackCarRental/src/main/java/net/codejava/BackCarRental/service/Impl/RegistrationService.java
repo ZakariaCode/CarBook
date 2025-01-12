@@ -1,8 +1,9 @@
-package net.codejava.backcarrental.service;
-import net.codejava.backcarrental.Model.Utilisateur;
-import net.codejava.backcarrental.dto.RegistrationRequest;
-import net.codejava.backcarrental.Model.ConfirmationToken;
-import net.codejava.backcarrental.Model.AppUserRole;
+package net.codejava.BackCarRental.service.Impl;
+
+import net.codejava.BackCarRental.model.ConfirmationToken;
+import net.codejava.BackCarRental.model.Utilisateur;
+import net.codejava.BackCarRental.dto.RegistrationRequest;
+import net.codejava.BackCarRental.service.IEmailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +14,12 @@ public class RegistrationService {
     private final UserService userService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
-    private final EmailSender emailSender;
+    private final IEmailSender emailSender;
 
     public RegistrationService(UserService userService,
                                EmailValidator emailValidator,
                                ConfirmationTokenService confirmationTokenService,
-                               EmailSender emailSender) {
+                               IEmailSender emailSender) {
         this.userService = userService;
         this.emailValidator = emailValidator;
         this.confirmationTokenService = confirmationTokenService;
@@ -34,11 +35,13 @@ public class RegistrationService {
         }
         String token =userService.signUpUser(
                 new Utilisateur(
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getPassword(),
+                        request.getNom(),
                         request.getEmail(),
-                        AppUserRole.CLIENT
+                        request.getPassword(),
+                        request.getCIN(),
+                        request.getVille(),
+                        request.getAdresse(),
+                        "Client"
 
                 )
         );

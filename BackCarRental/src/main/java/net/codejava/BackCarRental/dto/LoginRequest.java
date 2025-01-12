@@ -1,4 +1,4 @@
-package net.codejava.backcarrental.dto;
+package net.codejava.BackCarRental.dto;
 
 
 public class LoginRequest {

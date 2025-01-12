@@ -1,4 +1,4 @@
-package net.codejava.backcarrental.dto;
+package net.codejava.BackCarRental.dto;
 public class LoginResponse {
     private String status;
     private String message;
